@@ -1,20 +1,1114 @@
-function addMember(){
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    const input = document.getElementById("newMember");
-    const name = input.value.trim();
+<title>አለማየሁ እቁብ</title>
 
-    if(!name){
-        alert("የአባል ስም ያስገቡ።");
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    background:#061711;
+    color:#f5f7f6;
+    font-family:Arial,"Noto Sans Ethiopic",sans-serif;
+}
+
+:root{
+    --gold:#e8c65a;
+    --gold2:#f5d978;
+    --green:#0d2a21;
+    --green2:#12382b;
+    --line:#285343;
+    --muted:#9eb5ab;
+    --red:#8b3434;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:#061711ee;
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--line);
+}
+
+.nav{
+    max-width:1150px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    color:var(--gold);
+    font-size:23px;
+    font-weight:900;
+}
+
+nav{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:9px 12px;
+    border-radius:10px;
+}
+
+nav a:hover{
+    background:var(--green2);
+    color:var(--gold);
+}
+
+.wrap{
+    max-width:1150px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    text-align:center;
+    padding:70px 10px 45px;
+}
+
+.hero h1{
+    color:var(--gold);
+    font-size:clamp(38px,7vw,70px);
+    margin:10px 0;
+}
+
+.hero p{
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.8;
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:12px 18px;
+    margin:5px;
+    cursor:pointer;
+    font-weight:900;
+    font-size:15px;
+}
+
+.primary{
+    background:var(--gold);
+    color:#061711;
+}
+
+.primary:hover{
+    background:var(--gold2);
+}
+
+.secondary{
+    background:var(--green2);
+    color:white;
+    border:1px solid var(--line);
+}
+
+.danger{
+    background:var(--red);
+    color:white;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
+.stat,
+.card,
+.formCard{
+    background:var(--green);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat b{
+    display:block;
+    color:var(--gold);
+    font-size:23px;
+    margin-top:8px;
+}
+
+section{
+    padding:35px 0;
+}
+
+h2{
+    margin-top:0;
+}
+
+.members{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.member{
+    background:#102f25;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:17px;
+}
+
+.member .number{
+    color:var(--gold);
+    font-weight:bold;
+}
+
+.member .name{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.member small{
+    display:block;
+    color:var(--muted);
+    margin-top:7px;
+}
+
+.wheel{
+    width:230px;
+    height:230px;
+    margin:25px auto;
+    border-radius:50%;
+    border:8px solid var(--gold);
+    background:conic-gradient(
+        #173f30 0 20%,
+        #245b43 20% 40%,
+        #173f30 40% 60%,
+        #245b43 60% 80%,
+        #173f30 80%
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform 4s cubic-bezier(.12,.75,.12,1);
+}
+
+.wheel span{
+    background:#061711;
+    border:2px solid var(--gold);
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-weight:bold;
+    padding:10px;
+}
+
+.result{
+    display:none;
+    background:#102f25;
+    border:1px solid #806d2d;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.winner{
+    color:var(--gold);
+    font-size:30px;
+    font-weight:900;
+    margin:10px;
+}
+
+.notice{
+    padding:15px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.notice:last-child{
+    border-bottom:0;
+}
+
+.notice b{
+    color:var(--gold);
+}
+
+.notice small{
+    display:block;
+    color:var(--muted);
+    margin-top:5px;
+    line-height:1.7;
+}
+
+.login{
+    display:grid;
+    grid-template-columns:1fr 1fr auto;
+    gap:10px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #416656;
+    background:#061711;
+    color:white;
+    font-family:inherit;
+}
+
+textarea{
+    min-height:100px;
+}
+
+.adminPanel{
+    display:none;
+}
+
+.tabs{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin:20px 0;
+}
+
+.tab{
+    background:#102f25;
+    color:white;
+    border:1px solid var(--line);
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.tab.active{
+    background:var(--gold);
+    color:#061711;
+}
+
+.tabContent{
+    display:none;
+}
+
+.tabContent.active{
+    display:block;
+}
+
+.adminGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.adminMember{
+    display:grid;
+    grid-template-columns:40px 1fr auto;
+    gap:8px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.historyRow{
+    display:grid;
+    grid-template-columns:100px 1fr 150px;
+    gap:10px;
+    padding:12px;
+    border-bottom:1px solid var(--line);
+}
+
+footer{
+    text-align:center;
+    color:var(--muted);
+    border-top:1px solid var(--line);
+    padding:25px;
+    margin-top:30px;
+}
+
+.toast{
+    display:none;
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:999;
+    background:#12382b;
+    border:1px solid var(--gold);
+    border-radius:12px;
+    padding:15px 18px;
+    max-width:320px;
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
+}
+
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .members{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .adminGrid{
+        grid-template-columns:1fr;
+    }
+
+    .login{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:520px){
+
+    .nav{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    nav{
+        overflow:auto;
+        width:100%;
+    }
+
+    .members{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .historyRow{
+        grid-template-columns:70px 1fr;
+    }
+
+    .historyRow span:last-child{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">አለማየሁ እቁብ</div>
+
+<nav>
+<a href="#home">መነሻ</a>
+<a href="#members">አባላት</a>
+<a href="#lottery">እጣ</a>
+<a href="#notice">ማሳወቂያ</a>
+<a href="#admin">Admin</a>
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="wrap">
+
+
+<section id="home" class="hero">
+
+<h1>አለማየሁ እቁብ</h1>
+
+<p>
+እቁባችንን በቀላሉ፣ በግልጽነት እና
+በዘመናዊ መንገድ ለማስተዳደር
+የተዘጋጀ ድረ-ገጽ።
+</p>
+
+<a class="btn primary" href="#lottery">
+🎯 እጣ ማውጫ
+</a>
+
+<a class="btn secondary" href="#members">
+👥 አባላት
+</a>
+
+</section>
+
+
+<div class="stats">
+
+<div class="stat">
+አባላት
+<b id="memberCount">11</b>
+</div>
+
+<div class="stat">
+በሳምንት / አባል
+<b id="contributionView">10,000 ብር</b>
+</div>
+
+<div class="stat">
+የሳምንት ጠቅላላ
+<b id="totalView">110,000 ብር</b>
+</div>
+
+<div class="stat">
+የእጣ ሽልማት
+<b id="prizeView">150,000 ብር</b>
+</div>
+
+</div>
+
+
+<section id="members">
+
+<h2>👥 የእቁብ አባላት</h2>
+
+<div class="members" id="memberList"></div>
+
+</section>
+
+
+<section id="lottery">
+
+<div class="card">
+
+<h2>🎯 የእጣ ማውጫ</h2>
+
+<p>
+እጣው ከ <b id="startWeekView">6</b>ኛ ሳምንት ይጀምራል።
+</p>
+
+<div class="wheel" id="wheel">
+
+<span id="wheelText">
+እጣ<br>
+ዝግጁ ነው
+</span>
+
+</div>
+
+<div style="text-align:center">
+
+<button
+class="btn primary"
+id="drawButton"
+onclick="drawLottery()"
+>
+🎲 እጣ አውጣ
+</button>
+
+</div>
+
+
+<div class="result" id="result">
+
+<div>🎉 አሸናፊው</div>
+
+<div class="winner" id="winnerName"></div>
+
+<div>
+ሳምንት <b id="winnerWeek"></b>
+</div>
+
+<div>
+<span id="winnerPrize"></span> ብር
+</div>
+
+</div>
+
+
+<h2 style="margin-top:30px">
+📜 የእጣ ታሪክ
+</h2>
+
+<div id="history"></div>
+
+</div>
+
+</section>
+
+
+<section id="notice">
+
+<div class="card">
+
+<h2>🔔 ማሳወቂያዎች</h2>
+
+<div id="noticeList"></div>
+
+</div>
+
+</section>
+
+
+<section id="admin">
+
+<div class="card">
+
+<h2>🔐 Admin</h2>
+
+<div id="loginSection">
+
+<p style="color:#9eb5ab">
+የሰብሳቢው መቆጣጠሪያ
+</p>
+
+<div class="login">
+
+<input
+id="username"
+placeholder="Username"
+>
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
+
+<button
+class="btn primary"
+onclick="login()"
+>
+ግባ
+</button>
+
+</div>
+
+<p style="color:#9eb5ab">
+Username: <b>admin</b><br>
+Password: <b>1234</b>
+</p>
+
+</div>
+
+
+<div class="adminPanel" id="adminPanel">
+
+<div class="tabs">
+
+<button
+class="tab active"
+onclick="openTab('membersTab',this)"
+>
+👥 አባላት
+</button>
+
+<button
+class="tab"
+onclick="openTab('settingsTab',this)"
+>
+⚙️ ቅንብር
+</button>
+
+<button
+class="tab"
+onclick="openTab('noticeTab',this)"
+>
+🔔 ማሳወቂያ
+</button>
+
+<button
+class="tab"
+onclick="openTab('lotteryTab',this)"
+>
+🎯 እጣ
+</button>
+
+</div>
+
+
+<!-- MEMBERS -->
+
+<div
+class="tabContent active"
+id="membersTab"
+>
+
+<div class="adminGrid">
+
+
+<div class="formCard">
+
+<h3>➕ አዲስ አባል ጨምር</h3>
+
+<input
+id="newMember"
+placeholder="የአባል ስም"
+>
+
+<br><br>
+
+<button
+class="btn primary"
+onclick="addMember()"
+>
+➕ አባል ጨምር
+</button>
+
+</div>
+
+
+<div class="formCard">
+
+<h3>👥 የአባላት ዝርዝር</h3>
+
+<div id="adminMembers"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div
+class="tabContent"
+id="settingsTab"
+>
+
+<div class="formCard">
+
+<h3>⚙️ የእቁብ ቅንብር</h3>
+
+<label>በሳምንት / አባል</label>
+
+<br><br>
+
+<input
+id="setContribution"
+type="number"
+>
+
+<br><br>
+
+<label>የእጣ ሽልማት</label>
+
+<br><br>
+
+<input
+id="setPrize"
+type="number"
+>
+
+<br><br>
+
+<label>እጣ መጀመሪያ ሳምንት</label>
+
+<br><br>
+
+<input
+id="setStart"
+type="number"
+>
+
+<br><br>
+
+<label>የዑደት ሳምንት</label>
+
+<br><br>
+
+<input
+id="setCycle"
+type="number"
+>
+
+<br><br>
+
+<button
+class="btn primary"
+onclick="saveSettings()"
+>
+💾 አስቀምጥ
+</button>
+
+</div>
+
+</div>
+
+
+<!-- NOTICE -->
+
+<div
+class="tabContent"
+id="noticeTab"
+>
+
+<div class="adminGrid">
+
+<div class="formCard">
+
+<h3>📢 ማሳወቂያ ጨምር</h3>
+
+<input
+id="noticeTitle"
+placeholder="ርዕስ"
+>
+
+<br><br>
+
+<textarea
+id="noticeMessage"
+placeholder="መልዕክት"
+></textarea>
+
+<br>
+
+<button
+class="btn primary"
+onclick="addNotice()"
+>
+📢 ላክ
+</button>
+
+</div>
+
+
+<div class="formCard">
+
+<h3>📋 ማሳወቂያዎች</h3>
+
+<div id="adminNotices"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- LOTTERY -->
+
+<div
+class="tabContent"
+id="lotteryTab"
+>
+
+<div class="formCard">
+
+<h3>🎯 የእጣ መቆጣጠሪያ</h3>
+
+<p>
+አሁኑ ሳምንት:
+<b id="currentWeekAdmin"></b>
+</p>
+
+<p>
+የቀሩ አባላት:
+<b id="availableAdmin"></b>
+</p>
+
+<button
+class="btn danger"
+onclick="resetLottery()"
+>
+🔄 እጣውን እንደ አዲስ ጀምር
+</button>
+
+</div>
+
+</div>
+
+
+<br>
+
+<button
+class="btn secondary"
+onclick="logout()"
+>
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+© አለማየሁ እቁብ
+
+</footer>
+
+
+<div
+class="toast"
+id="toast"
+></div>
+
+
+<script>
+
+/* =========================
+   INITIAL DATA
+========================= */
+
+const defaultMembers = [
+    "አለማየሁ",
+    "ቃላአብ",
+    "ፌቨን",
+    "ፍሬ ሰንበት",
+    "አየናቸው",
+    "ጫላ",
+    "ቦጃ",
+    "አለማየሁ",
+    "ቃላአብ እና ፍሬ",
+    "ሞገስ",
+    "መልካሙ"
+];
+
+
+let members =
+    JSON.parse(localStorage.getItem("equb_members")) ||
+    defaultMembers;
+
+
+let settings =
+    JSON.parse(localStorage.getItem("equb_settings")) ||
+    {
+        contribution:10000,
+        prize:150000,
+        startWeek:6,
+        cycle:15
+    };
+
+
+let lottery =
+    JSON.parse(localStorage.getItem("equb_lottery")) ||
+    {
+        currentWeek:6,
+        winners:[],
+        available:[...members]
+    };
+
+
+let notices =
+    JSON.parse(localStorage.getItem("equb_notices")) ||
+    [
+        {
+            title:"እንኳን ደህና መጡ",
+            text:"የአለማየሁ እቁብ ድረ-ገጽ ነው።"
+        },
+        {
+            title:"የሳምንቱ ክፍያ",
+            text:"እያንዳንዱ አባል 10,000 ብር ይከፍላል።"
+        }
+    ];
+
+
+let spinning = false;
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        "equb_members",
+        JSON.stringify(members)
+    );
+
+    localStorage.setItem(
+        "equb_settings",
+        JSON.stringify(settings)
+    );
+
+    localStorage.setItem(
+        "equb_lottery",
+        JSON.stringify(lottery)
+    );
+
+    localStorage.setItem(
+        "equb_notices",
+        JSON.stringify(notices)
+    );
+}
+
+
+/* =========================
+   MONEY
+========================= */
+
+function money(number){
+
+    return Number(number || 0)
+        .toLocaleString("en-US");
+
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function safe(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   RENDER MEMBERS
+========================= */
+
+function renderMembers(){
+
+    const list =
+        document.getElementById("memberList");
+
+    list.innerHTML =
+        members.map(function(name,index){
+
+            return `
+                <div class="member">
+
+                    <span class="number">
+                        ${index + 1}.
+                    </span>
+
+                    <span class="name">
+                        ${safe(name)}
+                    </span>
+
+                    <small>
+                        ${money(settings.contribution)}
+                        ብር / ሳምንት
+                    </small>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    document.getElementById("memberCount")
+        .textContent = members.length;
+
+
+    document.getElementById("contributionView")
+        .textContent =
+        money(settings.contribution) + " ብር";
+
+
+    document.getElementById("totalView")
+        .textContent =
+        money(
+            members.length *
+            settings.contribution
+        ) + " ብር";
+
+
+    document.getElementById("prizeView")
+        .textContent =
+        money(settings.prize) + " ብር";
+
+}
+
+
+/* =========================
+   ADMIN MEMBERS
+========================= */
+
+function renderAdminMembers(){
+
+    const box =
+        document.getElementById("adminMembers");
+
+
+    if(members.length === 0){
+
+        box.innerHTML =
+            `<div class="empty">
+                አባል የለም።
+            </div>`;
+
         return;
     }
 
-    members.push(name);
-    lotteryData.available.push(name);
 
-    input.value = "";
+    box.innerHTML =
+        members.map(function(name,index){
 
-    saveAll();
-    renderAll();
+            return `
+                <div class="adminMember">
 
-    showToast("✅ " + name + " እንደ አዲስ አባል ተጨመረ።");
+                    <b style="color:#e8c65a">
+                        ${index + 1}
+                    </b>
+
+                    <input
+                        value="${safe(name)}"
+                        onchange="renameMember(${index},this.value)"
+                    >
+
+                    <button
+                        class="btn danger"
+                        onclick="deleteMember(${index})"
+                    >
+                        ሰርዝ
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+
 }
+
+
+/* =========================
+   ADD MEMBER
+========================= */
+
+function addMember(){
+
+    const input =
+        document.getElementById("newMember");
+
+
+    if(!input){
+
+        alert("የአባል መጨመሪ
