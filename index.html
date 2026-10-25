@@ -33,7 +33,7 @@ header{
     position:sticky;
     top:0;
     z-index:100;
-    background:#061711f2;
+    background:#061711f5;
     backdrop-filter:blur(15px);
     border-bottom:1px solid var(--line);
 }
@@ -179,6 +179,7 @@ h2{
 .memberNumber{
     color:var(--gold);
     font-weight:bold;
+    margin-right:7px;
 }
 
 .memberName{
@@ -275,6 +276,10 @@ input,textarea,select{
     font-family:inherit;
 }
 
+input:focus,textarea:focus{
+    outline:2px solid var(--gold);
+}
+
 textarea{
     min-height:100px;
     resize:vertical;
@@ -352,11 +357,17 @@ textarea{
 
 .adminMember{
     display:grid;
-    grid-template-columns:40px 1fr auto;
+    grid-template-columns:35px 1fr auto;
     gap:8px;
     align-items:center;
     padding:10px 0;
     border-bottom:1px solid var(--line);
+}
+
+.adminMember .btn{
+    margin:0;
+    padding:8px 10px;
+    font-size:13px;
 }
 
 .historyRow{
@@ -396,7 +407,6 @@ footer{
 }
 
 @media(max-width:800px){
-
     .stats{
         grid-template-columns:1fr 1fr;
     }
@@ -415,7 +425,6 @@ footer{
 }
 
 @media(max-width:520px){
-
     .nav{
         flex-direction:column;
         align-items:flex-start;
@@ -453,7 +462,6 @@ footer{
 <body>
 
 <header>
-
 <div class="nav">
 
 <div class="logo">አለማየሁ እቁብ</div>
@@ -467,9 +475,7 @@ footer{
 </nav>
 
 </div>
-
 </header>
-
 
 <main class="wrap">
 
@@ -483,16 +489,10 @@ footer{
 የተዘጋጀ ድረ-ገጽ።
 </p>
 
-<a class="btn primary" href="#lottery">
-🎯 እጣ ማውጫ
-</a>
-
-<a class="btn secondary" href="#members">
-👥 አባላት
-</a>
+<a class="btn primary" href="#lottery">🎯 እጣ ማውጫ</a>
+<a class="btn secondary" href="#members">👥 አባላት</a>
 
 </section>
-
 
 <div class="stats">
 
@@ -518,18 +518,13 @@ footer{
 
 </div>
 
-
 <section id="members">
 
 <h2>👥 የእቁብ አባላት</h2>
 
-<div
-class="members"
-id="memberList">
-</div>
+<div class="members" id="memberList"></div>
 
 </section>
-
 
 <section id="lottery">
 
@@ -557,23 +552,18 @@ id="memberList">
 <button
 class="btn primary"
 id="drawButton"
+type="button"
 onclick="drawLottery()">
 🎲 እጣ አውጣ
 </button>
 
 </div>
 
-
-<div
-class="result"
-id="result">
+<div class="result" id="result">
 
 <div>🎉 አሸናፊው</div>
 
-<div
-class="winner"
-id="winnerName">
-</div>
+<div class="winner" id="winnerName"></div>
 
 <div>
 ሳምንት
@@ -587,17 +577,13 @@ id="winnerName">
 
 </div>
 
-
-<h2 style="margin-top:30px">
-📜 የእጣ ታሪክ
-</h2>
+<h2 style="margin-top:30px">📜 የእጣ ታሪክ</h2>
 
 <div id="history"></div>
 
 </div>
 
 </section>
-
 
 <section id="notices">
 
@@ -611,17 +597,13 @@ id="winnerName">
 
 </section>
 
-
 <section id="admin">
 
 <div class="card">
 
 <h2>🔐 የሰብሳቢ Admin</h2>
 
-
-<div
-id="loginSection"
-class="loginBox">
+<div id="loginSection" class="loginBox">
 
 <p style="color:#9eb5ab">
 Admin ለመግባት የታችኛውን መረጃ ይጠቀሙ።
@@ -645,12 +627,12 @@ autocomplete="current-password">
 
 <button
 class="btn primary"
+type="button"
 onclick="login()">
 🔓 ግባ
 </button>
 
-<div
-style="margin-top:10px;color:#9eb5ab">
+<div style="margin-top:10px;color:#9eb5ab">
 
 Username:
 <b>admin</b>
@@ -663,49 +645,43 @@ Password:
 
 </div>
 
-
-<div
-id="adminPanel"
-class="adminPanel">
-
+<div id="adminPanel" class="adminPanel">
 
 <div class="tabs">
 
 <button
 class="tab active"
+type="button"
 onclick="openTab('membersTab',this)">
 👥 አባላት
 </button>
 
 <button
 class="tab"
+type="button"
 onclick="openTab('settingsTab',this)">
 ⚙️ ቅንብር
 </button>
 
 <button
 class="tab"
+type="button"
 onclick="openTab('noticeTab',this)">
 🔔 ማሳወቂያ
 </button>
 
 <button
 class="tab"
+type="button"
 onclick="openTab('lotteryTab',this)">
 🎯 እጣ
 </button>
 
 </div>
 
-
-<!-- MEMBERS TAB -->
-
-<div
-id="membersTab"
-class="tabContent active">
+<div id="membersTab" class="tabContent active">
 
 <div class="adminGrid">
-
 
 <div class="formCard">
 
@@ -713,9 +689,7 @@ class="tabContent active">
 
 <div class="formGroup">
 
-<label>
-የአባል ስም
-</label>
+<label>የአባል ስም</label>
 
 <input
 id="newMember"
@@ -733,12 +707,9 @@ onclick="addMember()">
 
 </div>
 
-
 <div class="formCard">
 
-<h3>
-👥 የአባላት ዝርዝር
-</h3>
+<h3>👥 የአባላት ዝርዝር</h3>
 
 <div id="adminMembers"></div>
 
@@ -748,12 +719,7 @@ onclick="addMember()">
 
 </div>
 
-
-<!-- SETTINGS TAB -->
-
-<div
-id="settingsTab"
-class="tabContent">
+<div id="settingsTab" class="tabContent">
 
 <div class="formCard">
 
@@ -761,57 +727,35 @@ class="tabContent">
 
 <div class="formGroup">
 
-<label>
-በሳምንት / አባል
-</label>
+<label>በሳምንት / አባል</label>
 
-<input
-id="setContribution"
-type="number">
+<input id="setContribution" type="number">
 
 </div>
-
 
 <div class="formGroup">
 
-<label>
-የእጣ ሽልማት
-</label>
+<label>የእጣ ሽልማት</label>
 
-<input
-id="setPrize"
-type="number">
+<input id="setPrize" type="number">
 
 </div>
-
 
 <div class="formGroup">
 
-<label>
-እጣ መጀመሪያ ሳምንት
-</label>
+<label>እጣ መጀመሪያ ሳምንት</label>
 
-<input
-id="setStart"
-type="number"
-min="1">
+<input id="setStart" type="number" min="1">
 
 </div>
-
 
 <div class="formGroup">
 
-<label>
-የዑደት ሳምንት
-</label>
+<label>የዑደት ሳምንት</label>
 
-<input
-id="setCycle"
-type="number"
-min="1">
+<input id="setCycle" type="number" min="1">
 
 </div>
-
 
 <button
 class="btn primary"
@@ -824,12 +768,7 @@ onclick="saveSettings()">
 
 </div>
 
-
-<!-- NOTICE TAB -->
-
-<div
-id="noticeTab"
-class="tabContent">
+<div id="noticeTab" class="tabContent">
 
 <div class="adminGrid">
 
@@ -867,7 +806,6 @@ onclick="addNotice()">
 
 </div>
 
-
 <div class="formCard">
 
 <h3>📋 የተላኩ ማሳወቂያዎች</h3>
@@ -880,12 +818,7 @@ onclick="addNotice()">
 
 </div>
 
-
-<!-- LOTTERY TAB -->
-
-<div
-id="lotteryTab"
-class="tabContent">
+<div id="lotteryTab" class="tabContent">
 
 <div class="formCard">
 
@@ -912,7 +845,6 @@ onclick="resetLottery()">
 
 </div>
 
-
 <br>
 
 <button
@@ -932,588 +864,128 @@ onclick="logout()">
 
 </main>
 
-
 <footer>
 © አለማየሁ እቁብ
 </footer>
 
-
-<div
-id="toast"
-class="toast">
-</div>
-
+<div id="toast" class="toast"></div>
 
 <script>
 
-/* =================================
-   DEFAULT MEMBERS
-================================= */
+/* =========================
+   DEFAULT DATA
+========================= */
 
 const defaultMembers = [
-
-"አለማየሁ",
-"ቃላአብ",
-"ፌቨን",
-"ፍሬ ሰንበት",
-"አየናቸው",
-"ጫላ",
-"ቦጃ",
-"አለማየሁ",
-"ቃላአብ እና ፍሬ",
-"ሞገስ",
-"መልካሙ"
-
+    "አለማየሁ",
+    "ቃላአብ",
+    "ፌቨን",
+    "ፍሬ ሰንበት",
+    "አየናቸው",
+    "ጫላ",
+    "ቦጃ",
+    "አለማየሁ",
+    "ቃላአብ እና ፍሬ",
+    "ሞገስ",
+    "መልካሙ"
 ];
 
+const defaultSettings = {
+    contribution:10000,
+    prize:150000,
+    startWeek:6,
+    cycle:15
+};
 
-/* =================================
-   LOAD DATA
-================================= */
+const defaultNotices = [
+    {
+        title:"እንኳን ደህና መጡ",
+        text:"የአለማየሁ እቁብ ድረ-ገጽ ነው።"
+    },
+    {
+        title:"የሳምንቱ ክፍያ",
+        text:"እያንዳንዱ አባል 10,000 ብር ይከፍላል።"
+    }
+];
 
-let members;
+/* =========================
+   DATA
+========================= */
 
-let settings;
+let members = loadJSON(
+    "alemayehu_members",
+    [...defaultMembers]
+);
 
-let lottery;
+let settings = loadJSON(
+    "alemayehu_settings",
+    {...defaultSettings}
+);
 
-let notices;
-
-
-/* =================================
-   SAFE LOAD
-================================= */
-
-try{
-
-    members =
-        JSON.parse(
-            localStorage.getItem(
-                "alemayehu_members"
-            )
-        ) || [...defaultMembers];
-
-}catch(e){
-
-    members = [...defaultMembers];
-
-}
-
-
-try{
-
-    settings =
-        JSON.parse(
-            localStorage.getItem(
-                "alemayehu_settings"
-            )
-        ) || {
-
-            contribution:10000,
-            prize:150000,
-            startWeek:6,
-            cycle:15
-
-        };
-
-}catch(e){
-
-    settings = {
-
-        contribution:10000,
-        prize:150000,
-        startWeek:6,
-        cycle:15
-
-    };
-
-}
-
-
-try{
-
-    lottery =
-        JSON.parse(
-            localStorage.getItem(
-                "alemayehu_lottery"
-            )
-        ) || {
-
-            currentWeek:6,
-            winners:[],
-            available:[...members]
-
-        };
-
-}catch(e){
-
-    lottery = {
-
+let lottery = loadJSON(
+    "alemayehu_lottery",
+    {
         currentWeek:6,
         winners:[],
         available:[...members]
+    }
+);
 
-    };
-
-}
-
-
-try{
-
-    notices =
-        JSON.parse(
-            localStorage.getItem(
-                "alemayehu_notices"
-            )
-        ) || [
-
-            {
-                title:"እንኳን ደህና መጡ",
-                text:
-                "የአለማየሁ እቁብ ድረ-ገጽ ነው።"
-            },
-
-            {
-                title:"የሳምንቱ ክፍያ",
-                text:
-                "እያንዳንዱ አባል 10,000 ብር ይከፍላል።"
-            }
-
-        ];
-
-}catch(e){
-
-    notices = [];
-
-}
-
+let notices = loadJSON(
+    "alemayehu_notices",
+    [...defaultNotices]
+);
 
 let spinning = false;
 
+/* =========================
+   SAFE LOAD
+========================= */
 
-/* =================================
-   SAVE DATA
-================================= */
+function loadJSON(key,fallback){
+
+    try{
+
+        const value =
+            localStorage.getItem(key);
+
+        if(!value){
+            return fallback;
+        }
+
+        const parsed =
+            JSON.parse(value);
+
+        return parsed ?? fallback;
+
+    }catch(error){
+
+        return fallback;
+    }
+}
+
+/* =========================
+   SAVE
+========================= */
 
 function saveData(){
 
-    localStorage.setItem(
-        "alemayehu_members",
-        JSON.stringify(members)
-    );
+    try{
 
-    localStorage.setItem(
-        "alemayehu_settings",
-        JSON.stringify(settings)
-    );
-
-    localStorage.setItem(
-        "alemayehu_lottery",
-        JSON.stringify(lottery)
-    );
-
-    localStorage.setItem(
-        "alemayehu_notices",
-        JSON.stringify(notices)
-    );
-
-}
-
-
-/* =================================
-   MONEY
-================================= */
-
-function money(value){
-
-    return Number(value || 0)
-        .toLocaleString("en-US");
-
-}
-
-
-/* =================================
-   SAFE HTML
-================================= */
-
-function safe(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =================================
-   RENDER MEMBERS
-================================= */
-
-function renderMembers(){
-
-    const list =
-        document.getElementById(
-            "memberList"
+        localStorage.setItem(
+            "alemayehu_members",
+            JSON.stringify(members)
         );
 
-
-    list.innerHTML =
-        members.map(function(name,index){
-
-            return `
-
-                <div class="member">
-
-                    <span class="memberNumber">
-                        ${index + 1}.
-                    </span>
-
-                    <span class="memberName">
-                        ${safe(name)}
-                    </span>
-
-                    <small>
-                        ${money(settings.contribution)}
-                        ብር / ሳምንት
-                    </small>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-
-    document.getElementById(
-        "memberCount"
-    ).textContent =
-        members.length;
-
-
-    document.getElementById(
-        "contributionView"
-    ).textContent =
-        money(settings.contribution)
-        + " ብር";
-
-
-    document.getElementById(
-        "totalView"
-    ).textContent =
-        money(
-            members.length *
-            settings.contribution
-        )
-        + " ብር";
-
-
-    document.getElementById(
-        "prizeView"
-    ).textContent =
-        money(settings.prize)
-        + " ብር";
-
-}
-
-
-/* =================================
-   ADMIN MEMBER LIST
-================================= */
-
-function renderAdminMembers(){
-
-    const box =
-        document.getElementById(
-            "adminMembers"
+        localStorage.setItem(
+            "alemayehu_settings",
+            JSON.stringify(settings)
         );
 
-
-    if(!members.length){
-
-        box.innerHTML =
-            `<div class="empty">
-                አባል የለም።
-            </div>`;
-
-        return;
-    }
-
-
-    box.innerHTML =
-        members.map(function(name,index){
-
-            return `
-
-                <div class="adminMember">
-
-                    <b style="color:#e8c65a">
-                        ${index + 1}
-                    </b>
-
-                    <input
-                        value="${safe(name)}"
-                        onchange="
-                            renameMember(
-                                ${index},
-                                this.value
-                            )
-                        "
-                    >
-
-                    <button
-                        class="btn danger"
-                        type="button"
-                        onclick="
-                            deleteMember(${index})
-                        "
-                    >
-                        ሰርዝ
-                    </button>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-}
-
-
-/* =================================
-   ADD MEMBER
-================================= */
-
-function addMember(){
-
-    const input =
-        document.getElementById(
-            "newMember"
+        localStorage.setItem(
+            "alemayehu_lottery",
+            JSON.stringify(lottery)
         );
 
-
-    if(!input){
-
-        alert(
-            "የአባል ማስገቢያ ሳጥን አልተገኘም።"
-        );
-
-        return;
-    }
-
-
-    const name =
-        input.value.trim();
-
-
-    if(name === ""){
-
-        alert(
-            "የአባል ስም ያስገቡ።"
-        );
-
-        input.focus();
-
-        return;
-    }
-
-
-    members.push(name);
-
-
-    /*
-       አዲሱ አባል በእጣ ውስጥ ይገባል
-    */
-
-    lottery.available.push(name);
-
-
-    input.value = "";
-
-
-    saveData();
-
-
-    renderAll();
-
-
-    showToast(
-        "✅ " +
-        name +
-        " እንደ አዲስ አባል ተጨመረ።"
-    );
-
-}
-
-
-/* =================================
-   RENAME MEMBER
-================================= */
-
-function renameMember(index,newName){
-
-    newName =
-        newName.trim();
-
-
-    if(newName === ""){
-
-        alert(
-            "ስም ባዶ ሊሆን አይችልም።"
-        );
-
-        renderAdminMembers();
-
-        return;
-    }
-
-
-    const oldName =
-        members[index];
-
-
-    members[index] =
-        newName;
-
-
-    /*
-       እጣ ላይ ያለውን ስም አዘምን
-    */
-
-    for(
-        let i = 0;
-        i < lottery.available.length;
-        i++
-    ){
-
-        if(
-            lottery.available[i] ===
-            oldName
-        ){
-
-            lottery.available[i] =
-                newName;
-
-        }
-
-    }
-
-
-    saveData();
-
-    renderAll();
-
-    showToast(
-        "✏️ የአባል ስም ተቀይሯል።"
-    );
-
-}
-
-
-/* =================================
-   DELETE MEMBER
-================================= */
-
-function deleteMember(index){
-
-    if(members.length <= 1){
-
-        alert(
-            "ቢያንስ አንድ አባል መኖር አለበት።"
-        );
-
-        return;
-    }
-
-
-    const name =
-        members[index];
-
-
-    if(
-        !confirm(
-            name +
-            "ን ማስወገድ ይፈልጋሉ?"
-        )
-    ){
-
-        return;
-    }
-
-
-    members.splice(index,1);
-
-
-    const position =
-        lottery.available.indexOf(name);
-
-
-    if(position !== -1){
-
-        lottery.available.splice(
-            position,
-            1
-        );
-
-    }
-
-
-    saveData();
-
-    renderAll();
-
-    showToast(
-        "🗑️ አባሉ ተሰርዟል።"
-    );
-
-}
-
-
-/* =================================
-   LOTTERY
-================================= */
-
-function drawLottery(){
-
-    if(spinning){
-
-        return;
-    }
-
-
-    if(
-        lottery.currentWeek <
-        settings.startWeek
-    ){
-
-        alert(
-            "እጣው ከሳምንት " +
-            settings.startWeek +
-            " ይጀምራል።"
-        );
-
-        return;
-    }
-
-
-    if(
-        lottery.currentWeek >
-        settings.cycle
-    ){
-
-        alert(
-            "የእቁብ ዑደቱ ተጠናቋል።"
-        );
-
-        return;
-    }
-
-
-    if(
-        lottery.available.length === 0
-    ){
-
-        alert(
-            "የ
+        localStorage.setItem(
+            "alemayehu
