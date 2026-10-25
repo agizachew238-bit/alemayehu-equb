@@ -54,7 +54,13 @@ h2{font-size:19px;margin-top:0;color:var(--dark)}
   border-left:4px solid var(--green);
 }
 .stat small{color:var(--muted)}
-.stat strong{display:block;font-size:25px;margin-top:8px;color:var(--dark)}
+.stat strong{
+  display:block;
+  font-size:25px;
+  margin-top:8px;
+  color:var(--dark);
+  overflow-wrap:anywhere;
+}
 input,select,button{
   width:100%;
   padding:12px;
@@ -76,7 +82,11 @@ button.gold{background:#b8860b}
 button.danger{background:var(--red)}
 button:disabled{opacity:.5;cursor:not-allowed}
 table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{padding:12px;text-align:left;border-bottom:1px solid #e2e8f0}
+th,td{
+  padding:12px;
+  text-align:left;
+  border-bottom:1px solid #e2e8f0;
+}
 th{background:#ecfdf5;color:var(--dark)}
 .table-wrap{overflow-x:auto}
 .badge{
@@ -95,6 +105,7 @@ th{background:#ecfdf5;color:var(--dark)}
   background:#fffbeb;
   color:#92400e;
   margin:10px 0;
+  overflow-wrap:anywhere;
 }
 .success{background:#dcfce7;color:#166534}
 .error{background:#fee2e2;color:#991b1b}
@@ -149,11 +160,11 @@ hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
         </div>
         <div class="stat">
           <small>የሳምንት መዋጮ</small>
-          <strong>10,000 ብር</strong>
+          <strong id="contributionAmount">10,000 ብር</strong>
         </div>
         <div class="stat">
           <small>የዕጣ ክፍያ</small>
-          <strong>150,000 ብር</strong>
+          <strong id="payoutAmount">150,000 ብር</strong>
         </div>
         <div class="stat">
           <small>የአሁኑ ሳምንት</small>
@@ -170,7 +181,7 @@ hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
             <tr>
               <th>ተ.ቁ</th>
               <th>የአባል ስም</th>
-              <th>የዚህ ሳምንት ክፍያ</th>
+              <th>የክፍያ ሁኔታ</th>
             </tr>
           </thead>
           <tbody id="membersTable"></tbody>
@@ -205,6 +216,41 @@ hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
           አስተዳዳሪ ብቻ የክፍያ፣ የዕጣ እና የገንዘብ መረጃዎችን ማስተካከል ይችላል።
         </div>
 
+        <h2>👤 የአድሚን ስም ማስተካከያ</h2>
+        <label for="adminUsername">የአድሚን ስም</label>
+        <input id="adminUsername" type="text" maxlength="50"
+               placeholder="አዲስ የአድሚን ስም">
+
+        <button id="saveUsernameBtn" onclick="saveAdminUsername()">
+          የአድሚን ስም አስቀምጥ
+        </button>
+
+        <hr>
+
+        <h2>🔑 የይለፍ ቃል መቀየሪያ</h2>
+
+        <label for="currentAdminPassword">አሁን ያለው የይለፍ ቃል</label>
+        <input id="currentAdminPassword" type="password"
+               autocomplete="current-password">
+
+        <label for="newAdminPassword">አዲስ የይለፍ ቃል</label>
+        <input id="newAdminPassword" type="password"
+               autocomplete="new-password">
+
+        <label for="confirmAdminPassword">አዲሱን የይለፍ ቃል ድገም</label>
+        <input id="confirmAdminPassword" type="password"
+               autocomplete="new-password">
+
+        <button id="changePasswordBtn" onclick="changeAdminPassword()">
+          የይለፍ ቃል ቀይር
+        </button>
+
+        <div id="adminAccountMessage" class="notice">
+          የአድሚን መለያህን በደህንነት አስተዳድር።
+        </div>
+
+        <hr>
+
         <label for="weekSelect">ሳምንት ምረጥ</label>
         <select id="weekSelect">
           <option value="1">ሳምንት 1</option>
@@ -227,7 +273,7 @@ hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
         <label for="memberSelect">አባል ምረጥ</label>
         <select id="memberSelect"></select>
 
-        <button onclick="markPaid()">የክፍያ ሁኔታን እንደተከፈለ ምልክት አድርግ</button>
+        <button onclick="markPaid()">ክፍያውን እንደተከፈለ ምልክት አድርግ</button>
         <button class="secondary" onclick="markUnpaid()">የክፍያ ምልክቱን መልስ</button>
 
         <hr>
@@ -262,9 +308,7 @@ hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
   </div>
 </main>
 
-<footer>
-  © 2026 አለማየሁ እቁብ
-</footer>
+<footer>© 2026 አለማየሁ እቁብ</footer>
 
 <script type="module">
 import { initializeApp } from
@@ -274,7 +318,10 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 import {
@@ -285,7 +332,6 @@ import {
   update
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-/* Firebase project configuration */
 const firebaseConfig = {
   apiKey: "AIzaSyCrw9iYsLyW-5QNLw8dQtX0bHUFb-RZfyA",
   authDomain: "alemayehu-equb.firebaseapp.com",
@@ -316,9 +362,9 @@ const defaultMembers = [
   {id:"m11",name:"መልካሙ"}
 ];
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
+const appFirebase = initializeApp(firebaseConfig);
+const auth = getAuth(appFirebase);
+const db = getDatabase(appFirebase);
 
 let currentUser = null;
 let isAdmin = false;
@@ -335,6 +381,15 @@ function message(id, text, type="notice") {
   el.className = type;
 }
 
+function showDatabaseError(error) {
+  console.error("Database error:", error);
+  message(
+    "authMessage",
+    "ዳታቤዙን ማንበብ ወይም መጻፍ አልተቻለም። Firebase Database Rules እና ግንኙነቱን አረጋግጥ።",
+    "notice error"
+  );
+}
+
 window.login = async function() {
   const email = $("email").value.trim();
   const password = $("password").value;
@@ -345,17 +400,28 @@ window.login = async function() {
   }
 
   $("loginBtn").disabled = true;
+
   try {
     await signInWithEmailAndPassword(auth,email,password);
-  } catch (e) {
-    message("authMessage","መግባት አልተሳካም። መረጃህንና Firebase Authentication ተመልከት።","notice error");
+    $("password").value = "";
+  } catch (error) {
+    console.error(error);
+    message(
+      "authMessage",
+      "መግባት አልተሳካም። ኢሜይሉን፣ የይለፍ ቃሉንና Firebase Authentication አረጋግጥ።",
+      "notice error"
+    );
   } finally {
     $("loginBtn").disabled = false;
   }
 };
 
 window.logout = async function() {
-  await signOut(auth);
+  try {
+    await signOut(auth);
+  } catch (error) {
+    alert("መውጣት አልተሳካም።");
+  }
 };
 
 onAuthStateChanged(auth, async user => {
@@ -372,22 +438,23 @@ onAuthStateChanged(auth, async user => {
     return;
   }
 
-  message("authMessage",isAdmin ? "እንኳን ደህና መጣህ፣ አስተዳዳሪ።" : "በተሳካ ሁኔታ ገብተሃል።","notice success");
+  message(
+    "authMessage",
+    isAdmin ? "እንኳን ደህና መጣህ፣ አስተዳዳሪ።" : "በተሳካ ሁኔታ ገብተሃል።",
+    "notice success"
+  );
 
   try {
-    await ensureInitialData();
+    if (isAdmin) {
+      await ensureInitialData();
+      await loadAdminProfile();
+    }
     await refreshData();
-  } catch (e) {
-    console.error(e);
-    message("authMessage","ዳታቤዙን ማንበብ አልተቻለም። Firebase Rules ተመልከት።","notice error");
+  } catch (error) {
+    showDatabaseError(error);
   }
 });
 
-/*
-  The public and private data paths must be protected separately
-  by Firebase Realtime Database Rules. This setup only initializes
-  data when the relevant paths are empty; it never overwrites existing data.
-*/
 async function ensureInitialData() {
   if (!isAdmin) return;
 
@@ -404,6 +471,7 @@ async function ensureInitialData() {
 
   const settingsRef = ref(db,"public/settings");
   const settings = await get(settingsRef);
+
   if (!settings.exists()) {
     await set(settingsRef,{
       contribution:CONTRIBUTION,
@@ -416,6 +484,7 @@ async function ensureInitialData() {
 
   const privateRef = ref(db,"private/accounting");
   const privateSnapshot = await get(privateRef);
+
   if (!privateSnapshot.exists()) {
     await set(privateRef,{
       payments:{},
@@ -426,10 +495,129 @@ async function ensureInitialData() {
 
   const drawsRef = ref(db,"public/draws");
   const drawsSnapshot = await get(drawsRef);
+
   if (!drawsSnapshot.exists()) {
     await set(drawsRef,{});
   }
 }
+
+async function loadAdminProfile() {
+  if (!isAdmin) return;
+
+  try {
+    const profileSnap = await get(ref(db,"private/adminProfile/username"));
+    if (profileSnap.exists()) {
+      $("adminUsername").value = profileSnap.val();
+    }
+  } catch (error) {
+    console.warn("Admin profile could not be read:", error);
+  }
+}
+
+window.saveAdminUsername = async function() {
+  if (!currentUser || !isAdmin) {
+    alert("ይህን ስራ ማድረግ የሚችለው አስተዳዳሪ ብቻ ነው።");
+    return;
+  }
+
+  const username = $("adminUsername").value.trim();
+
+  if (username.length < 3) {
+    message("adminAccountMessage","ስሙ ቢያንስ 3 ቁምፊዎች ይኑሩት።","notice error");
+    return;
+  }
+
+  $("saveUsernameBtn").disabled = true;
+
+  try {
+    await set(ref(db,"private/adminProfile/username"),username);
+
+    message(
+      "adminAccountMessage",
+      "የአድሚን ስም በተሳካ ሁኔታ ተቀምጧል።",
+      "notice success"
+    );
+  } catch (error) {
+    console.error(error);
+    message(
+      "adminAccountMessage",
+      "ስሙን ማስቀመጥ አልተቻለም። Firebase Database Rules አረጋግጥ።",
+      "notice error"
+    );
+  } finally {
+    $("saveUsernameBtn").disabled = false;
+  }
+};
+
+window.changeAdminPassword = async function() {
+  if (!currentUser || !isAdmin || !currentUser.email) {
+    alert("አስተዳዳሪው በትክክለኛ መለያ መግባት አለበት።");
+    return;
+  }
+
+  const currentPassword = $("currentAdminPassword").value;
+  const newPassword = $("newAdminPassword").value;
+  const confirmPassword = $("confirmAdminPassword").value;
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    message("adminAccountMessage","ሦሱንም ቦታዎች ሙላ።","notice error");
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    message("adminAccountMessage","አዲሱ የይለፍ ቃል ቢያንስ 6 ቁምፊዎች ይኑሩት።","notice error");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    message("adminAccountMessage","አዲሶቹ የይለፍ ቃሎች አይዛመዱም።","notice error");
+    return;
+  }
+
+  if (currentPassword === newPassword) {
+    message("adminAccountMessage","አዲሱ የይለፍ ቃል ከአሁኑ የተለየ መሆን አለበት።","notice error");
+    return;
+  }
+
+  $("changePasswordBtn").disabled = true;
+
+  try {
+    const credential = EmailAuthProvider.credential(
+      currentUser.email,
+      currentPassword
+    );
+
+    await reauthenticateWithCredential(currentUser,credential);
+    await updatePassword(currentUser,newPassword);
+
+    $("currentAdminPassword").value = "";
+    $("newAdminPassword").value = "";
+    $("confirmAdminPassword").value = "";
+
+    message(
+      "adminAccountMessage",
+      "የይለፍ ቃልህ ተቀይሯል። በአዲሱ የይለፍ ቃል ግባ።",
+      "notice success"
+    );
+  } catch (error) {
+    console.error(error);
+
+    let text = "የይለፍ ቃሉ አልተቀየረም። የአሁኑን ቃልና የFirebase ማዋቀር አረጋግጥ።";
+
+    if (error.code === "auth/wrong-password" ||
+        error.code === "auth/invalid-credential") {
+      text = "ያስገባኸው የአሁኑ የይለፍ ቃል ትክክል አይደለም።";
+    } else if (error.code === "auth/weak-password") {
+      text = "አዲሱ የይለፍ ቃል በቂ ጥንካሬ የለውም።";
+    } else if (error.code === "auth/too-many-requests") {
+      text = "ብዙ ጊዜ ሞክረሃል። ትንሽ ጠብቀህ እንደገና ሞክር።";
+    }
+
+    message("adminAccountMessage",text,"notice error");
+  } finally {
+    $("changePasswordBtn").disabled = false;
+  }
+};
 
 window.refreshData = async function() {
   if (!currentUser) return;
@@ -441,6 +629,7 @@ window.refreshData = async function() {
   ]);
 
   members = [];
+
   if (mSnap.exists()) {
     const value = mSnap.val();
     members = Object.entries(value).map(([id,m])=>({id,...m}));
@@ -453,20 +642,31 @@ window.refreshData = async function() {
 
   if (isAdmin) {
     const pSnap = await get(ref(db,"private/accounting"));
-    privateData = pSnap.exists() ? pSnap.val() : {payments:{},payouts:{}};
+    privateData = pSnap.exists()
+      ? pSnap.val()
+      : {payments:{},payouts:{},openingBalance:0};
+  } else {
+    privateData = {};
   }
 
   renderMembers();
   renderDraws();
 
-  $("weekNumber").textContent = publicData.settings.currentWeek || 1;
+  const settings = publicData.settings || {};
+  $("weekNumber").textContent = settings.currentWeek || 1;
   $("memberCount").textContent = members.length;
+  $("contributionAmount").textContent = money(settings.contribution || CONTRIBUTION);
+  $("payoutAmount").textContent = money(settings.payout || PAYOUT);
 
   if (isAdmin) renderAdmin();
 };
 
 function renderMembers() {
-  const week = Number($("weekSelect").value || publicData.settings.currentWeek || 1);
+  const settings = publicData.settings || {};
+  const week = Number(
+    $("weekSelect").value || settings.currentWeek || 1
+  );
+
   const payments = privateData.payments || {};
   const tbody = $("membersTable");
   tbody.innerHTML = "";
@@ -482,13 +682,23 @@ function renderMembers() {
 
     const paid = !!(payments[week] && payments[week][m.id]);
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td></td>
-      <td><span class="badge ${isAdmin && !paid ? "no" : ""}">
-      ${isAdmin ? (paid ? "ተከፍሏል" : "አልተከፈለም") : "የክፍያ መረጃ በአስተዳዳሪ ይመራል"}
-      </span></td>`;
-    tr.children[1].textContent = m.name;
+
+    const numberCell = document.createElement("td");
+    numberCell.textContent = i + 1;
+
+    const nameCell = document.createElement("td");
+    nameCell.textContent = m.name;
+
+    const statusCell = document.createElement("td");
+    const badge = document.createElement("span");
+
+    badge.className = "badge" + (isAdmin && !paid ? " no" : "");
+    badge.textContent = isAdmin
+      ? (paid ? "ተከፍሏል" : "አልተከፈለም")
+      : "የክፍያ መረጃ በአስተዳዳሪ ይመራል";
+
+    statusCell.appendChild(badge);
+    tr.append(numberCell,nameCell,statusCell);
     tbody.appendChild(tr);
   });
 }
@@ -508,13 +718,22 @@ function renderDraws() {
 
   entries.forEach(([week,d])=>{
     const tr = document.createElement("tr");
-    const date = d.date ? new Date(d.date).toLocaleDateString("am-ET") : "-";
-    tr.innerHTML = `
-      <td>${week}</td>
-      <td></td>
-      <td>${money(d.amount)}</td>
-      <td>${date}</td>`;
-    tr.children[1].textContent = d.winnerName || "—";
+
+    const weekCell = document.createElement("td");
+    weekCell.textContent = week;
+
+    const winnerCell = document.createElement("td");
+    winnerCell.textContent = d.winnerName || "—";
+
+    const amountCell = document.createElement("td");
+    amountCell.textContent = money(d.amount);
+
+    const dateCell = document.createElement("td");
+    dateCell.textContent = d.date
+      ? new Date(d.date).toLocaleDateString("am-ET")
+      : "-";
+
+    tr.append(weekCell,winnerCell,amountCell,dateCell);
     tbody.appendChild(tr);
   });
 }
@@ -522,6 +741,7 @@ function renderDraws() {
 function renderAdmin() {
   const payments = privateData.payments || {};
   const payouts = privateData.payouts || {};
+
   let contributionTotal = 0;
   let payoutTotal = 0;
 
@@ -531,11 +751,12 @@ function renderAdmin() {
     });
   });
 
-  Object.values(payouts).forEach(p=> {
+  Object.values(payouts).forEach(p=>{
     payoutTotal += Number(p.amount || 0);
   });
 
   const opening = Number(privateData.openingBalance || 0);
+
   $("totalContributions").textContent = money(contributionTotal);
   $("totalPayouts").textContent = money(payoutTotal);
   $("balance").textContent = money(opening + contributionTotal - payoutTotal);
@@ -544,29 +765,41 @@ function renderAdmin() {
 }
 
 window.markPaid = async function() {
-  if (!isAdmin) return alert("ይህን ስራ ማድረግ የሚችለው አስተዳዳሪ ብቻ ነው።");
+  if (!isAdmin) {
+    alert("ይህን ስራ ማድረግ የሚችለው አስተዳዳሪ ብቻ ነው።");
+    return;
+  }
 
   const week = $("weekSelect").value;
   const memberId = $("memberSelect").value;
+
   if (!memberId) return alert("አባል ምረጥ።");
 
   const existing = privateData.payments?.[week]?.[memberId];
-  if (existing) return alert("ይህ አባል ለዚህ ሳምንት ክፍያው ተመዝግቧል።");
+
+  if (existing) {
+    return alert("ይህ አባል ለዚህ ሳምንት ክፍያው ተመዝግቧል።");
+  }
 
   try {
     await set(ref(db,`private/accounting/payments/${week}/${memberId}`),true);
     await refreshData();
     alert("ክፍያው ተመዝግቧል።");
-  } catch(e) {
+  } catch(error) {
+    console.error(error);
     alert("ክፍያው አልተመዘገበም። Firebase Rules እና ግንኙነቱን ተመልከት።");
   }
 };
 
 window.markUnpaid = async function() {
-  if (!isAdmin) return alert("አስተዳዳሪ ብቻ።");
+  if (!isAdmin) {
+    alert("አስተዳዳሪ ብቻ።");
+    return;
+  }
 
   const week = $("weekSelect").value;
   const memberId = $("memberSelect").value;
+
   if (!memberId) return alert("አባል ምረጥ።");
 
   if (!confirm("የዚህን ክፍያ ምልክት ማስወገድ ትፈልጋለህ?")) return;
@@ -574,42 +807,54 @@ window.markUnpaid = async function() {
   try {
     await set(ref(db,`private/accounting/payments/${week}/${memberId}`),null);
     await refreshData();
-  } catch(e) {
+  } catch(error) {
+    console.error(error);
     alert("መረጃውን ማስተካከል አልተቻለም።");
   }
 };
 
 window.runDraw = async function() {
-  if (!isAdmin) return alert("አስተዳዳሪ ብቻ ዕጣ ማውጣት ይችላል።");
+  if (!isAdmin) {
+    alert("አስተዳዳሪ ብቻ ዕጣ ማውጣት ይችላል።");
+    return;
+  }
 
   const settings = publicData.settings || {};
   const week = Number(settings.currentWeek || 1);
   const startWeek = Number(settings.drawStartsWeek || 6);
+  const totalWeeks = Number(settings.totalWeeks || TOTAL_WEEKS);
+  const payout = Number(settings.payout || PAYOUT);
 
   if (week < startWeek) {
     return alert(`ዕጣው ከ${startWeek}ኛው ሳምንት ጀምሮ ነው።`);
   }
 
-  if (week > TOTAL_WEEKS) {
-    return alert("የ15 ሳምንት የእቁብ ዙር ተጠናቋል።");
+  if (week > totalWeeks) {
+    return alert(`የ${totalWeeks} ሳምንት የእቁብ ዙር ተጠናቋል።`);
   }
 
   const draws = publicData.draws || {};
+
   if (draws[week]) {
     return alert("ለዚህ ሳምንት ዕጣ አስቀድሞ ወጥቷል።");
   }
 
-  const paidMembers = members.filter(m=>privateData.payments?.[week]?.[m.id]);
+  const paidMembers = members.filter(m=>
+    privateData.payments?.[week]?.[m.id]
+  );
 
   if (!paidMembers.length) {
     return alert("ለዚህ ሳምንት ክፍያ የከፈሉ አባላት አልተመዘገቡም።");
   }
 
-  const winner = paidMembers[Math.floor(Math.random()*paidMembers.length)];
+  const winner = paidMembers[
+    Math.floor(Math.random()*paidMembers.length)
+  ];
+
   const draw = {
     winnerId:winner.id,
     winnerName:winner.name,
-    amount:PAYOUT,
+    amount:payout,
     date:new Date().toISOString()
   };
 
@@ -618,19 +863,27 @@ window.runDraw = async function() {
     await set(ref(db,`private/accounting/payouts/${week}`),draw);
 
     await update(ref(db,"public/settings"),{
-      currentWeek:Math.min(week+1,TOTAL_WEEKS+1)
+      currentWeek:Math.min(week+1,totalWeeks+1)
     });
 
     $("drawMessage").classList.remove("hidden");
-    message("drawMessage",`🎉 አሸናፊ፦ ${winner.name} — ${money(PAYOUT)}`,"notice success");
+
+    message(
+      "drawMessage",
+      `🎉 አሸናፊ፦ ${winner.name} — ${money(payout)}`,
+      "notice success"
+    );
 
     await refreshData();
-  } catch(e) {
+  } catch(error) {
+    console.error(error);
     alert("ዕጣውን መመዝገብ አልተቻለም። Firebase Rules ተመልከት።");
   }
 };
 
-$("weekSelect").addEventListener("change",renderMembers);
+$("weekSelect").addEventListener("change",()=>{
+  renderMembers();
+});
 </script>
 
 </body>
