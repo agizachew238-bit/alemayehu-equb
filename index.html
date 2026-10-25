@@ -7,13 +7,9 @@
 <title>አለማየሁ እቁብ</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-    scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
     margin:0;
@@ -27,16 +23,17 @@ body{
     --gold2:#f5d978;
     --green:#0d2a21;
     --green2:#12382b;
+    --green3:#174b38;
     --line:#285343;
     --muted:#9eb5ab;
-    --red:#8b3434;
+    --red:#7b3030;
 }
 
 header{
     position:sticky;
     top:0;
     z-index:100;
-    background:#061711ee;
+    background:#061711f2;
     backdrop-filter:blur(15px);
     border-bottom:1px solid var(--line);
 }
@@ -44,7 +41,7 @@ header{
 .nav{
     max-width:1150px;
     margin:auto;
-    padding:15px 20px;
+    padding:14px 20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -83,7 +80,7 @@ nav a:hover{
 
 .hero{
     text-align:center;
-    padding:70px 10px 45px;
+    padding:65px 10px 45px;
 }
 
 .hero h1{
@@ -95,7 +92,9 @@ nav a:hover{
 .hero p{
     color:var(--muted);
     font-size:18px;
-    line-height:1.8;
+    line-height:1.9;
+    max-width:750px;
+    margin:auto;
 }
 
 .btn{
@@ -134,16 +133,11 @@ nav a:hover{
     gap:13px;
 }
 
-.stat,
-.card,
-.formCard{
+.stat{
     background:var(--green);
     border:1px solid var(--line);
     border-radius:18px;
     padding:20px;
-}
-
-.stat{
     text-align:center;
 }
 
@@ -156,6 +150,13 @@ nav a:hover{
 
 section{
     padding:35px 0;
+}
+
+.card{
+    background:var(--green);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
 }
 
 h2{
@@ -175,12 +176,12 @@ h2{
     padding:17px;
 }
 
-.member .number{
+.memberNumber{
     color:var(--gold);
     font-weight:bold;
 }
 
-.member .name{
+.memberName{
     font-size:18px;
     font-weight:bold;
 }
@@ -211,11 +212,11 @@ h2{
 }
 
 .wheel span{
-    background:#061711;
-    border:2px solid var(--gold);
     width:130px;
     height:130px;
     border-radius:50%;
+    background:#061711;
+    border:2px solid var(--gold);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -235,7 +236,7 @@ h2{
 
 .winner{
     color:var(--gold);
-    font-size:30px;
+    font-size:32px;
     font-weight:900;
     margin:10px;
 }
@@ -260,15 +261,11 @@ h2{
     line-height:1.7;
 }
 
-.login{
-    display:grid;
-    grid-template-columns:1fr 1fr auto;
-    gap:10px;
+.loginBox{
+    max-width:500px;
 }
 
-input,
-select,
-textarea{
+input,textarea,select{
     width:100%;
     padding:12px;
     border-radius:10px;
@@ -280,6 +277,13 @@ textarea{
 
 textarea{
     min-height:100px;
+    resize:vertical;
+}
+
+.loginInputs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
 .adminPanel{
@@ -291,6 +295,8 @@ textarea{
     gap:7px;
     flex-wrap:wrap;
     margin:20px 0;
+    border-bottom:1px solid var(--line);
+    padding-bottom:12px;
 }
 
 .tab{
@@ -322,6 +328,28 @@ textarea{
     gap:15px;
 }
 
+.formCard{
+    background:#102f25;
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:18px;
+}
+
+.formCard h3{
+    color:var(--gold);
+    margin-top:0;
+}
+
+.formGroup{
+    margin-bottom:15px;
+}
+
+.formGroup label{
+    display:block;
+    margin-bottom:7px;
+    color:var(--muted);
+}
+
 .adminMember{
     display:grid;
     grid-template-columns:40px 1fr auto;
@@ -337,6 +365,12 @@ textarea{
     gap:10px;
     padding:12px;
     border-bottom:1px solid var(--line);
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
 }
 
 footer{
@@ -358,12 +392,7 @@ footer{
     border-radius:12px;
     padding:15px 18px;
     max-width:320px;
-}
-
-.empty{
-    text-align:center;
-    color:var(--muted);
-    padding:20px;
+    box-shadow:0 10px 30px #0008;
 }
 
 @media(max-width:800px){
@@ -380,7 +409,7 @@ footer{
         grid-template-columns:1fr;
     }
 
-    .login{
+    .loginInputs{
         grid-template-columns:1fr;
     }
 }
@@ -393,8 +422,8 @@ footer{
     }
 
     nav{
-        overflow:auto;
         width:100%;
+        overflow:auto;
     }
 
     .members{
@@ -412,6 +441,11 @@ footer{
     .historyRow span:last-child{
         display:none;
     }
+
+    .wheel{
+        width:210px;
+        height:210px;
+    }
 }
 </style>
 </head>
@@ -428,7 +462,7 @@ footer{
 <a href="#home">መነሻ</a>
 <a href="#members">አባላት</a>
 <a href="#lottery">እጣ</a>
-<a href="#notice">ማሳወቂያ</a>
+<a href="#notices">ማሳወቂያ</a>
 <a href="#admin">Admin</a>
 </nav>
 
@@ -438,7 +472,6 @@ footer{
 
 
 <main class="wrap">
-
 
 <section id="home" class="hero">
 
@@ -490,7 +523,10 @@ footer{
 
 <h2>👥 የእቁብ አባላት</h2>
 
-<div class="members" id="memberList"></div>
+<div
+class="members"
+id="memberList">
+</div>
 
 </section>
 
@@ -502,7 +538,9 @@ footer{
 <h2>🎯 የእጣ ማውጫ</h2>
 
 <p>
-እጣው ከ <b id="startWeekView">6</b>ኛ ሳምንት ይጀምራል።
+እጣው ከ
+<b id="startWeekView">6</b>
+ኛ ሳምንት ይጀምራል።
 </p>
 
 <div class="wheel" id="wheel">
@@ -519,26 +557,32 @@ footer{
 <button
 class="btn primary"
 id="drawButton"
-onclick="drawLottery()"
->
+onclick="drawLottery()">
 🎲 እጣ አውጣ
 </button>
 
 </div>
 
 
-<div class="result" id="result">
+<div
+class="result"
+id="result">
 
 <div>🎉 አሸናፊው</div>
 
-<div class="winner" id="winnerName"></div>
-
-<div>
-ሳምንት <b id="winnerWeek"></b>
+<div
+class="winner"
+id="winnerName">
 </div>
 
 <div>
-<span id="winnerPrize"></span> ብር
+ሳምንት
+<b id="winnerWeek"></b>
+</div>
+
+<div>
+<span id="winnerPrize"></span>
+ብር
 </div>
 
 </div>
@@ -555,7 +599,7 @@ onclick="drawLottery()"
 </section>
 
 
-<section id="notice">
+<section id="notices">
 
 <div class="card">
 
@@ -572,85 +616,93 @@ onclick="drawLottery()"
 
 <div class="card">
 
-<h2>🔐 Admin</h2>
+<h2>🔐 የሰብሳቢ Admin</h2>
 
-<div id="loginSection">
+
+<div
+id="loginSection"
+class="loginBox">
 
 <p style="color:#9eb5ab">
-የሰብሳቢው መቆጣጠሪያ
+Admin ለመግባት የታችኛውን መረጃ ይጠቀሙ።
 </p>
 
-<div class="login">
+<div class="loginInputs">
 
 <input
 id="username"
+type="text"
 placeholder="Username"
->
+autocomplete="username">
 
 <input
 id="password"
 type="password"
 placeholder="Password"
->
+autocomplete="current-password">
+
+</div>
 
 <button
 class="btn primary"
-onclick="login()"
->
-ግባ
+onclick="login()">
+🔓 ግባ
 </button>
 
+<div
+style="margin-top:10px;color:#9eb5ab">
+
+Username:
+<b>admin</b>
+<br>
+
+Password:
+<b>1234</b>
+
 </div>
 
-<p style="color:#9eb5ab">
-Username: <b>admin</b><br>
-Password: <b>1234</b>
-</p>
-
 </div>
 
 
-<div class="adminPanel" id="adminPanel">
+<div
+id="adminPanel"
+class="adminPanel">
+
 
 <div class="tabs">
 
 <button
 class="tab active"
-onclick="openTab('membersTab',this)"
->
+onclick="openTab('membersTab',this)">
 👥 አባላት
 </button>
 
 <button
 class="tab"
-onclick="openTab('settingsTab',this)"
->
+onclick="openTab('settingsTab',this)">
 ⚙️ ቅንብር
 </button>
 
 <button
 class="tab"
-onclick="openTab('noticeTab',this)"
->
+onclick="openTab('noticeTab',this)">
 🔔 ማሳወቂያ
 </button>
 
 <button
 class="tab"
-onclick="openTab('lotteryTab',this)"
->
+onclick="openTab('lotteryTab',this)">
 🎯 እጣ
 </button>
 
 </div>
 
 
-<!-- MEMBERS -->
+<!-- MEMBERS TAB -->
 
 <div
-class="tabContent active"
 id="membersTab"
->
+class="tabContent active">
 
 <div class="adminGrid">
 
@@ -659,17 +711,23 @@ id="membersTab"
 
 <h3>➕ አዲስ አባል ጨምር</h3>
 
+<div class="formGroup">
+
+<label>
+የአባል ስም
+</label>
+
 <input
 id="newMember"
-placeholder="የአባል ስም"
->
+type="text"
+placeholder="ለምሳሌ፦ ሚካኤል">
 
-<br><br>
+</div>
 
 <button
 class="btn primary"
-onclick="addMember()"
->
+type="button"
+onclick="addMember()">
 ➕ አባል ጨምር
 </button>
 
@@ -678,7 +736,9 @@ onclick="addMember()"
 
 <div class="formCard">
 
-<h3>👥 የአባላት ዝርዝር</h3>
+<h3>
+👥 የአባላት ዝርዝር
+</h3>
 
 <div id="adminMembers"></div>
 
@@ -689,66 +749,75 @@ onclick="addMember()"
 </div>
 
 
-<!-- SETTINGS -->
+<!-- SETTINGS TAB -->
 
 <div
-class="tabContent"
 id="settingsTab"
->
+class="tabContent">
 
 <div class="formCard">
 
 <h3>⚙️ የእቁብ ቅንብር</h3>
 
-<label>በሳምንት / አባል</label>
+<div class="formGroup">
 
-<br><br>
+<label>
+በሳምንት / አባል
+</label>
 
 <input
 id="setContribution"
-type="number"
->
+type="number">
 
-<br><br>
+</div>
 
-<label>የእጣ ሽልማት</label>
 
-<br><br>
+<div class="formGroup">
+
+<label>
+የእጣ ሽልማት
+</label>
 
 <input
 id="setPrize"
-type="number"
->
+type="number">
 
-<br><br>
+</div>
 
-<label>እጣ መጀመሪያ ሳምንት</label>
 
-<br><br>
+<div class="formGroup">
+
+<label>
+እጣ መጀመሪያ ሳምንት
+</label>
 
 <input
 id="setStart"
 type="number"
->
+min="1">
 
-<br><br>
+</div>
 
-<label>የዑደት ሳምንት</label>
 
-<br><br>
+<div class="formGroup">
+
+<label>
+የዑደት ሳምንት
+</label>
 
 <input
 id="setCycle"
 type="number"
->
+min="1">
 
-<br><br>
+</div>
+
 
 <button
 class="btn primary"
-onclick="saveSettings()"
->
-💾 አስቀምጥ
+type="button"
+onclick="saveSettings()">
+💾 ቅንብሩን አስቀምጥ
 </button>
 
 </div>
@@ -756,12 +825,11 @@ onclick="saveSettings()"
 </div>
 
 
-<!-- NOTICE -->
+<!-- NOTICE TAB -->
 
 <div
-class="tabContent"
 id="noticeTab"
->
+class="tabContent">
 
 <div class="adminGrid">
 
@@ -769,25 +837,32 @@ id="noticeTab"
 
 <h3>📢 ማሳወቂያ ጨምር</h3>
 
+<div class="formGroup">
+
+<label>ርዕስ</label>
+
 <input
 id="noticeTitle"
-placeholder="ርዕስ"
->
+type="text"
+placeholder="ርዕስ">
 
-<br><br>
+</div>
+
+<div class="formGroup">
+
+<label>መልዕክት</label>
 
 <textarea
 id="noticeMessage"
-placeholder="መልዕክት"
-></textarea>
+placeholder="መልዕክት"></textarea>
 
-<br>
+</div>
 
 <button
 class="btn primary"
-onclick="addNotice()"
->
-📢 ላክ
+type="button"
+onclick="addNotice()">
+📢 ማሳወቂያ ላክ
 </button>
 
 </div>
@@ -795,7 +870,7 @@ onclick="addNotice()"
 
 <div class="formCard">
 
-<h3>📋 ማሳወቂያዎች</h3>
+<h3>📋 የተላኩ ማሳወቂያዎች</h3>
 
 <div id="adminNotices"></div>
 
@@ -806,12 +881,11 @@ onclick="addNotice()"
 </div>
 
 
-<!-- LOTTERY -->
+<!-- LOTTERY TAB -->
 
 <div
-class="tabContent"
 id="lotteryTab"
->
+class="tabContent">
 
 <div class="formCard">
 
@@ -829,8 +903,8 @@ id="lotteryTab"
 
 <button
 class="btn danger"
-onclick="resetLottery()"
->
+type="button"
+onclick="resetLottery()">
 🔄 እጣውን እንደ አዲስ ጀምር
 </button>
 
@@ -843,8 +917,8 @@ onclick="resetLottery()"
 
 <button
 class="btn secondary"
-onclick="logout()"
->
+type="button"
+onclick="logout()">
 🚪 Logout
 </button>
 
@@ -860,127 +934,211 @@ onclick="logout()"
 
 
 <footer>
-
 © አለማየሁ እቁብ
-
 </footer>
 
 
 <div
-class="toast"
 id="toast"
-></div>
+class="toast">
+</div>
 
 
 <script>
 
-/* =========================
-   INITIAL DATA
-========================= */
+/* =================================
+   DEFAULT MEMBERS
+================================= */
 
 const defaultMembers = [
-    "አለማየሁ",
-    "ቃላአብ",
-    "ፌቨን",
-    "ፍሬ ሰንበት",
-    "አየናቸው",
-    "ጫላ",
-    "ቦጃ",
-    "አለማየሁ",
-    "ቃላአብ እና ፍሬ",
-    "ሞገስ",
-    "መልካሙ"
+
+"አለማየሁ",
+"ቃላአብ",
+"ፌቨን",
+"ፍሬ ሰንበት",
+"አየናቸው",
+"ጫላ",
+"ቦጃ",
+"አለማየሁ",
+"ቃላአብ እና ፍሬ",
+"ሞገስ",
+"መልካሙ"
+
 ];
 
 
-let members =
-    JSON.parse(localStorage.getItem("equb_members")) ||
-    defaultMembers;
+/* =================================
+   LOAD DATA
+================================= */
+
+let members;
+
+let settings;
+
+let lottery;
+
+let notices;
 
 
-let settings =
-    JSON.parse(localStorage.getItem("equb_settings")) ||
-    {
+/* =================================
+   SAFE LOAD
+================================= */
+
+try{
+
+    members =
+        JSON.parse(
+            localStorage.getItem(
+                "alemayehu_members"
+            )
+        ) || [...defaultMembers];
+
+}catch(e){
+
+    members = [...defaultMembers];
+
+}
+
+
+try{
+
+    settings =
+        JSON.parse(
+            localStorage.getItem(
+                "alemayehu_settings"
+            )
+        ) || {
+
+            contribution:10000,
+            prize:150000,
+            startWeek:6,
+            cycle:15
+
+        };
+
+}catch(e){
+
+    settings = {
+
         contribution:10000,
         prize:150000,
         startWeek:6,
         cycle:15
+
     };
 
+}
 
-let lottery =
-    JSON.parse(localStorage.getItem("equb_lottery")) ||
-    {
+
+try{
+
+    lottery =
+        JSON.parse(
+            localStorage.getItem(
+                "alemayehu_lottery"
+            )
+        ) || {
+
+            currentWeek:6,
+            winners:[],
+            available:[...members]
+
+        };
+
+}catch(e){
+
+    lottery = {
+
         currentWeek:6,
         winners:[],
         available:[...members]
+
     };
 
+}
 
-let notices =
-    JSON.parse(localStorage.getItem("equb_notices")) ||
-    [
-        {
-            title:"እንኳን ደህና መጡ",
-            text:"የአለማየሁ እቁብ ድረ-ገጽ ነው።"
-        },
-        {
-            title:"የሳምንቱ ክፍያ",
-            text:"እያንዳንዱ አባል 10,000 ብር ይከፍላል።"
-        }
-    ];
+
+try{
+
+    notices =
+        JSON.parse(
+            localStorage.getItem(
+                "alemayehu_notices"
+            )
+        ) || [
+
+            {
+                title:"እንኳን ደህና መጡ",
+                text:
+                "የአለማየሁ እቁብ ድረ-ገጽ ነው።"
+            },
+
+            {
+                title:"የሳምንቱ ክፍያ",
+                text:
+                "እያንዳንዱ አባል 10,000 ብር ይከፍላል።"
+            }
+
+        ];
+
+}catch(e){
+
+    notices = [];
+
+}
 
 
 let spinning = false;
 
 
-/* =========================
-   SAVE
-========================= */
+/* =================================
+   SAVE DATA
+================================= */
 
 function saveData(){
 
     localStorage.setItem(
-        "equb_members",
+        "alemayehu_members",
         JSON.stringify(members)
     );
 
     localStorage.setItem(
-        "equb_settings",
+        "alemayehu_settings",
         JSON.stringify(settings)
     );
 
     localStorage.setItem(
-        "equb_lottery",
+        "alemayehu_lottery",
         JSON.stringify(lottery)
     );
 
     localStorage.setItem(
-        "equb_notices",
+        "alemayehu_notices",
         JSON.stringify(notices)
     );
+
 }
 
 
-/* =========================
+/* =================================
    MONEY
-========================= */
+================================= */
 
-function money(number){
+function money(value){
 
-    return Number(number || 0)
+    return Number(value || 0)
         .toLocaleString("en-US");
 
 }
 
 
-/* =========================
-   ESCAPE
-========================= */
+/* =================================
+   SAFE HTML
+================================= */
 
-function safe(text){
+function safe(value){
 
-    return String(text)
+    return String(value)
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
@@ -990,26 +1148,30 @@ function safe(text){
 }
 
 
-/* =========================
+/* =================================
    RENDER MEMBERS
-========================= */
+================================= */
 
 function renderMembers(){
 
     const list =
-        document.getElementById("memberList");
+        document.getElementById(
+            "memberList"
+        );
+
 
     list.innerHTML =
         members.map(function(name,index){
 
             return `
+
                 <div class="member">
 
-                    <span class="number">
+                    <span class="memberNumber">
                         ${index + 1}.
                     </span>
 
-                    <span class="name">
+                    <span class="memberName">
                         ${safe(name)}
                     </span>
 
@@ -1019,46 +1181,57 @@ function renderMembers(){
                     </small>
 
                 </div>
+
             `;
 
         }).join("");
 
 
-    document.getElementById("memberCount")
-        .textContent = members.length;
+    document.getElementById(
+        "memberCount"
+    ).textContent =
+        members.length;
 
 
-    document.getElementById("contributionView")
-        .textContent =
-        money(settings.contribution) + " ብር";
+    document.getElementById(
+        "contributionView"
+    ).textContent =
+        money(settings.contribution)
+        + " ብር";
 
 
-    document.getElementById("totalView")
-        .textContent =
+    document.getElementById(
+        "totalView"
+    ).textContent =
         money(
             members.length *
             settings.contribution
-        ) + " ብር";
+        )
+        + " ብር";
 
 
-    document.getElementById("prizeView")
-        .textContent =
-        money(settings.prize) + " ብር";
+    document.getElementById(
+        "prizeView"
+    ).textContent =
+        money(settings.prize)
+        + " ብር";
 
 }
 
 
-/* =========================
-   ADMIN MEMBERS
-========================= */
+/* =================================
+   ADMIN MEMBER LIST
+================================= */
 
 function renderAdminMembers(){
 
     const box =
-        document.getElementById("adminMembers");
+        document.getElementById(
+            "adminMembers"
+        );
 
 
-    if(members.length === 0){
+    if(!members.length){
 
         box.innerHTML =
             `<div class="empty">
@@ -1073,6 +1246,7 @@ function renderAdminMembers(){
         members.map(function(name,index){
 
             return `
+
                 <div class="adminMember">
 
                     <b style="color:#e8c65a">
@@ -1081,17 +1255,26 @@ function renderAdminMembers(){
 
                     <input
                         value="${safe(name)}"
-                        onchange="renameMember(${index},this.value)"
+                        onchange="
+                            renameMember(
+                                ${index},
+                                this.value
+                            )
+                        "
                     >
 
                     <button
                         class="btn danger"
-                        onclick="deleteMember(${index})"
+                        type="button"
+                        onclick="
+                            deleteMember(${index})
+                        "
                     >
                         ሰርዝ
                     </button>
 
                 </div>
+
             `;
 
         }).join("");
@@ -1099,16 +1282,238 @@ function renderAdminMembers(){
 }
 
 
-/* =========================
+/* =================================
    ADD MEMBER
-========================= */
+================================= */
 
 function addMember(){
 
     const input =
-        document.getElementById("newMember");
+        document.getElementById(
+            "newMember"
+        );
 
 
     if(!input){
 
-        alert("የአባል መጨመሪ
+        alert(
+            "የአባል ማስገቢያ ሳጥን አልተገኘም።"
+        );
+
+        return;
+    }
+
+
+    const name =
+        input.value.trim();
+
+
+    if(name === ""){
+
+        alert(
+            "የአባል ስም ያስገቡ።"
+        );
+
+        input.focus();
+
+        return;
+    }
+
+
+    members.push(name);
+
+
+    /*
+       አዲሱ አባል በእጣ ውስጥ ይገባል
+    */
+
+    lottery.available.push(name);
+
+
+    input.value = "";
+
+
+    saveData();
+
+
+    renderAll();
+
+
+    showToast(
+        "✅ " +
+        name +
+        " እንደ አዲስ አባል ተጨመረ።"
+    );
+
+}
+
+
+/* =================================
+   RENAME MEMBER
+================================= */
+
+function renameMember(index,newName){
+
+    newName =
+        newName.trim();
+
+
+    if(newName === ""){
+
+        alert(
+            "ስም ባዶ ሊሆን አይችልም።"
+        );
+
+        renderAdminMembers();
+
+        return;
+    }
+
+
+    const oldName =
+        members[index];
+
+
+    members[index] =
+        newName;
+
+
+    /*
+       እጣ ላይ ያለውን ስም አዘምን
+    */
+
+    for(
+        let i = 0;
+        i < lottery.available.length;
+        i++
+    ){
+
+        if(
+            lottery.available[i] ===
+            oldName
+        ){
+
+            lottery.available[i] =
+                newName;
+
+        }
+
+    }
+
+
+    saveData();
+
+    renderAll();
+
+    showToast(
+        "✏️ የአባል ስም ተቀይሯል።"
+    );
+
+}
+
+
+/* =================================
+   DELETE MEMBER
+================================= */
+
+function deleteMember(index){
+
+    if(members.length <= 1){
+
+        alert(
+            "ቢያንስ አንድ አባል መኖር አለበት።"
+        );
+
+        return;
+    }
+
+
+    const name =
+        members[index];
+
+
+    if(
+        !confirm(
+            name +
+            "ን ማስወገድ ይፈልጋሉ?"
+        )
+    ){
+
+        return;
+    }
+
+
+    members.splice(index,1);
+
+
+    const position =
+        lottery.available.indexOf(name);
+
+
+    if(position !== -1){
+
+        lottery.available.splice(
+            position,
+            1
+        );
+
+    }
+
+
+    saveData();
+
+    renderAll();
+
+    showToast(
+        "🗑️ አባሉ ተሰርዟል።"
+    );
+
+}
+
+
+/* =================================
+   LOTTERY
+================================= */
+
+function drawLottery(){
+
+    if(spinning){
+
+        return;
+    }
+
+
+    if(
+        lottery.currentWeek <
+        settings.startWeek
+    ){
+
+        alert(
+            "እጣው ከሳምንት " +
+            settings.startWeek +
+            " ይጀምራል።"
+        );
+
+        return;
+    }
+
+
+    if(
+        lottery.currentWeek >
+        settings.cycle
+    ){
+
+        alert(
+            "የእቁብ ዑደቱ ተጠናቋል።"
+        );
+
+        return;
+    }
+
+
+    if(
+        lottery.available.length === 0
+    ){
+
+        alert(
+            "የ
