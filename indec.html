@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>አለማየሁ እቁብ</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#031a14;
+  color:#fff;
+}
+header{
+  background:#03231b;
+  padding:22px 18px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-bottom:1px solid #315b4d;
+}
+.logo{
+  color:#ffd84d;
+  font-size:28px;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+nav{
+  display:flex;
+  gap:25px;
+  overflow-x:auto;
+}
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:17px;
+  white-space:nowrap;
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:25px 18px 60px;
+}
+.card{
+  background:#082b22;
+  border:1px solid #315b4d;
+  border-radius:22px;
+  padding:25px;
+  margin:20px 0;
+}
+h1,h2{color:#ffd84d}
+input,textarea{
+  width:100%;
+  padding:15px;
+  margin:8px 0 15px;
+  border-radius:12px;
+  border:1px solid #386b5b;
+  background:#041d17;
+  color:white;
+  font-size:16px;
+}
+button{
+  border:0;
+  border-radius:12px;
+  padding:14px 22px;
+  background:#ffd84d;
+  color:#17200b;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:disabled{opacity:.6}
+.danger{background:#b93434;color:white}
+.success,.error{
+  padding:15px;
+  border-radius:12px;
+  margin:10px 0;
+  overflow-wrap:anywhere;
+}
+.success{background:#174d35;border:1px solid #3c9b68}
+.error{background:#572323;border:1px solid #bd5555}
+.hidden{display:none!important}
+label{display:block;font-weight:bold;margin-top:8px}
+.member{
+  background:#041f18;
+  border:1px solid #315b4d;
+  border-radius:14px;
+  padding:15px;
+  margin:10px 0;
+  overflow-wrap:anywhere;
+}
+.member strong{color:#ffd84d}
+.stat{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.statBox{
+  background:#041f18;
+  border:1px solid #315b4d;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+}
+.statBox b{
+  display:block;
+  color:#ffd84d;
+  font-size:28px;
+  margin-top:8px;
+}
+.small{color:#aaa;font-size:14px}
+footer{
+  text-align:center;
+  padding:30px;
+  border-top:1px solid #315b4d;
+  color:#aaa;
+}
+@media(max-width:600px){
+  .logo{font-size:24px}
+  .card{padding:18px}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">አለማየሁ እቁብ</div>
+  <nav>
+    <a href="#home">መነሻ</a>
+    <a href="#members">አባላት</a>
+    <a href="#about">ስለእኛ</a>
+    <a href="#notice">ማስታወቂያ</a>
+    <a href="#admin">Admin</a>
+  </nav>
+</header>
+
+<main class="container">
+
+<section id="home" class="card">
+  <h1>እንኳን ወደ አለማየሁ እቁብ በደህና መጡ</h1>
+  <p>ይህ የአባላት መረጃና የእቁብ ማስታወቂያዎችን ለማደራጀት የተዘጋጀ ድረ-ገጽ ነው።</p>
+</section>
+
+<section id="members" class="card">
+  <h2>👥 አባላት</h2>
+  <div class="stat">
+    <div class="statBox">የአባላት ብዛት<b id="memberCount">0</b></div>
+    <div class="statBox">ሁኔታ<b>ንቁ</b></div>
+  </div>
+  <div id="membersList"><p class="small">መረጃ እየተጫነ ነው...</p></div>
+</section>
+
+<section id="about" class="card">
+  <h2>ℹ️ ስለእኛ</h2>
+  <p>አለማየሁ እቁብ የአባላትን መረጃና ማስታወቂያዎችን ለማደራጀት የተዘጋጀ ዘመናዊ የድር ስርዓት ነው።</p>
+</section>
+
+<section id="notice" class="card">
+  <h2>📢 ማስታወቂያ</h2>
+  <div id="noticeList"><p class="small">ማስታወቂያ እየተጫነ ነው...</p></div>
+</section>
+
+<section id="admin" class="card">
+  <h2>🔐 Admin</h2>
+
+  <div id="loginBox">
+    <p>Firebase Admin email እና password ያስገቡ።</p>
+    <div id="loginMessage" aria-live="polite"></div>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="username" placeholder="Admin email">
+
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Password">
+
+    <button id="loginBtn">🔐 ግባ</button>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <div class="success">✅ Admin Login ተሳክቷል።</div>
+    <p id="adminEmail"></p>
+    <button id="logoutBtn" class="danger">🚪 Logout</button>
+
+    <hr style="margin:25px 0;border-color:#315b4d">
+
+    <h2>👥 አባል መጨመሪያ</h2>
+    <label for="memberName">ስም</label>
+    <input id="memberName" placeholder="የአባሉ ስም">
+    <label for="memberPhone">ስልክ</label>
+    <input id="memberPhone" type="tel" placeholder="ስልክ ቁጥር">
+    <button id="addMemberBtn">➕ አባል ጨምር</button>
+    <div id="memberMessage" aria-live="polite"></div>
+
+    <hr style="margin:25px 0;border-color:#315b4d">
+
+    <h2>📢 ማስታወቂያ መጨመሪያ</h2>
+    <label for="noticeTitle">ርዕስ</label>
+    <input id="noticeTitle" placeholder="የማስታወቂያ ርዕስ">
+    <label for="noticeText">መልዕክት</label>
+    <textarea id="noticeText" rows="4" placeholder="የማስታወቂያ መልዕክት"></textarea>
+    <button id="addNoticeBtn">📢 ማስታወቂያ ላክ</button>
+    <div id="noticeMessage" aria-live="polite"></div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 አለማየሁ እቁብ</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  push
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+/* Firebase configuration copied from your Firebase Console */
+const firebaseConfig = {
+  apiKey: "AIzaSyCrw9iYsLyW-5QNLw8dQtX0bHUFb-RZfyA",
+  authDomain: "alemayehu-equb.firebaseapp.com",
+  databaseURL: "https://alemayehu-equb-default-rtdb.firebaseio.com",
+  projectId: "alemayehu-equb",
+  storageBucket: "alemayehu-equb.firebasestorage.app",
+  messagingSenderId: "901654220346",
+  appId: "1:901654220346:web:f7663e1f34ebe43dcf2f03",
+  measurementId: "G-GGMKD16XWD"
+};
+
+const ADMIN_UID = "NOqlmtXemfUBFi2Yy0FFUsc1ZLJ2";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function showMessage(id, text, type="error") {
+  $(id).innerHTML = `<div class="${type}">${escapeHTML(text)}</div>`;
+}
+
+/* Public member list */
+async function loadMembers() {
+  try {
+    const snapshot = await get(ref(db,"public/members"));
+    const list = $("membersList");
+    list.replaceChildren();
+
+    if (!snapshot.exists()) {
+      $("memberCount").textContent = "0";
+      list.textContent = "እስካሁን አባል የለም።";
+      return;
+    }
+
+    const members = Object.values(snapshot.val());
+    $("memberCount").textContent = members.length;
+
+    members.forEach(member => {
+      const div = document.createElement("div");
+      div.className = "member";
+
+      const name = document.createElement("strong");
+      name.textContent = member.name || "";
+
+      const phone = document.createElement("p");
+      phone.textContent = member.phone || "";
+
+      div.append(name, phone);
+      list.appendChild(div);
+    });
+  } catch (error) {
+    console.error("Load members:", error);
+    $("membersList").textContent =
+      "የአባላት መረጃ ማምጣት አልተቻለም።";
+  }
+}
+
+/* Public notices */
+async function loadNotices() {
+  try {
+    const snapshot = await get(ref(db,"public/notices"));
+    const list = $("noticeList");
+    list.replaceChildren();
+
+    if (!snapshot.exists()) {
+      list.textContent = "ምንም ማስታወቂያ የለም።";
+      return;
+    }
+
+    const notices = Object.values(snapshot.val()).reverse();
+
+    notices.forEach(notice => {
+      const div = document.createElement("div");
+      div.className = "member";
+
+      const title = document.createElement("strong");
+      title.textContent = notice.title || "";
+
+      const text = document.createElement("p");
+      text.textContent = notice.text || "";
+
+      const date = document.createElement("span");
+      date.className = "small";
+      date.textContent = notice.date || "";
+
+      div.append(title, text, date);
+      list.appendChild(div);
+    });
+  } catch (error) {
+    console.error("Load notices:", error);
+    $("noticeList").textContent =
+      "ማስታወቂያ ማምጣት አልተቻለም።";
+  }
+}
+
+/* Firebase admin login */
+$("loginBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  $("loginMessage").replaceChildren();
+
+  if (!email || !password) {
+    showMessage("loginMessage","Email እና Password ያስገቡ።");
+    return;
+  }
+
+  $("loginBtn").disabled = true;
+  $("loginBtn").textContent = "እየገባ ነው...";
+
+  try {
+    const result = await signInWithEmailAndPassword(auth,email,password);
+
+    if (result.user.uid !== ADMIN_UID) {
+      await signOut(auth);
+      showMessage("loginMessage","ይህ account የAdmin መለያ አይደለም።");
+    }
+  } catch (error) {
+    console.error("Login error:",error);
+    const messages = {
+      "auth/invalid-credential":"Email ወይም Password ትክክል አይደለም።",
+      "auth/user-not-found":"ይህ Email በFirebase Authentication ውስጥ የለም።",
+      "auth/wrong-password":"Password ትክክል አይደለም።",
+      "auth/operation-not-allowed":"Firebase Email/Password sign-in ማብራት ያስፈልጋል።",
+      "auth/invalid-api-key":"Firebase API key ወይም API key restrictions መመርመር ያስፈልጋል።",
+      "auth/network-request-failed":"የኢንተርኔት ግንኙነትን ያረጋግጡ።",
+      "auth/too-many-requests":"ብዙ ጊዜ ተሞክሯል። ትንሽ ጠብቀው እንደገና ይሞክሩ።"
+    };
+    const message = messages[error.code] || "Login አልተሳካም። የFirebase error code: " + (error.code || "unknown");
+    showMessage("loginMessage",message);
+  } finally {
+    $("loginBtn").disabled = false;
+    $("loginBtn").textContent = "🔐 ግባ";
+  }
+});
+
+/* Sign out */
+$("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+/* Only the designated UID sees admin tools */
+onAuthStateChanged(auth, user => {
+  if (user && user.uid === ADMIN_UID) {
+    $("loginBox").classList.add("hidden");
+    $("adminPanel").classList.remove("hidden");
+    $("adminEmail").textContent = "Admin: " + (user.email || "");
+  } else {
+    $("loginBox").classList.remove("hidden");
+    $("adminPanel").classList.add("hidden");
+    $("adminEmail").textContent = "";
+  }
+});
+
+/* Add member */
+$("addMemberBtn").addEventListener("click", async () => {
+  const name = $("memberName").value.trim();
+  const phone = $("memberPhone").value.trim();
+
+  if (!name) {
+    showMessage("memberMessage","የአባሉን ስም ያስገቡ።");
+    return;
+  }
+
+  try {
+    await set(push(ref(db,"public/members")),{
+      name,
+      phone,
+      createdAt: new Date().toISOString()
+    });
+
+    showMessage("memberMessage","አባሉ ተጨምሯል።","success");
+    $("memberName").value = "";
+    $("memberPhone").value = "";
+    await loadMembers();
+  } catch (error) {
+    console.error("Add member:",error);
+    showMessage("memberMessage","አባል መጨመር አልተቻለም። የFirebase Rules ያረጋግጡ።");
+  }
+});
+
+/* Add notice */
+$("addNoticeBtn").addEventListener("click", async () => {
+  const title = $("noticeTitle").value.trim();
+  const text = $("noticeText").value.trim();
+
+  if (!title || !text) {
+    showMessage("noticeMessage","ርዕስ እና መልዕክት ያስገቡ።");
+    return;
+  }
+
+  try {
+    await set(push(ref(db,"public/notices")),{
+      title,
+      text,
+      date: new Date().toLocaleString()
+    });
+
+    showMessage("noticeMessage","ማስታወቂያው ተጨምሯል።","success");
+    $("noticeTitle").value = "";
+    $("noticeText").value = "";
+    await loadNotices();
+  } catch (error) {
+    console.error("Add notice:",error);
+    showMessage("noticeMessage","ማስታወቂያ መጨመር አልተቻለም። የFirebase Rules ያረጋግጡ።");
+  }
+});
+
+loadMembers();
+loadNotices();
+</script>
+</body>
+</html>
