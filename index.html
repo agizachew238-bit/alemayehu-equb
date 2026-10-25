@@ -988,4 +988,1045 @@ function saveData(){
         );
 
         localStorage.setItem(
-            "alemayehu
+            "alemayehu_notices",
+            JSON.stringify(notices)
+        );
+
+    }catch(error){
+
+        alert(
+            "መረጃውን ማስቀመጥ አልተቻለም።"
+        );
+    }
+}
+
+/* =========================
+   MONEY
+========================= */
+
+function money(value){
+
+    return Number(value || 0)
+        .toLocaleString("en-US");
+}
+
+/* =========================
+   SAFE HTML
+========================= */
+
+function safe(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* =========================
+   MAIN RENDER
+========================= */
+
+function renderAll(){
+
+    renderMembers();
+    renderNotices();
+    renderHistory();
+    renderAdminMembers();
+    renderAdminNotices();
+    renderAdminLottery();
+    loadSettings();
+
+    document.getElementById(
+        "startWeekView"
+    ).textContent =
+        settings.startWeek;
+}
+
+/* =========================
+   MEMBERS
+========================= */
+
+function renderMembers(){
+
+    const list =
+        document.getElementById("memberList");
+
+    if(!members.length){
+
+        list.innerHTML =
+            '<div class="empty">አባል የለም።</div>';
+
+    }else{
+
+        list.innerHTML =
+            members.map(function(name,index){
+
+                return `
+                    <div class="member">
+                        <span class="memberNumber">
+                            ${index + 1}.
+                        </span>
+
+                        <span class="memberName">
+                            ${safe(name)}
+                        </span>
+
+                        <small>
+                            ${money(settings.contribution)}
+                            ብር / ሳምንት
+                        </small>
+                    </div>
+                `;
+
+            }).join("");
+    }
+
+    document.getElementById(
+        "memberCount"
+    ).textContent =
+        members.length;
+
+    document.getElementById(
+        "contributionView"
+    ).textContent =
+        money(settings.contribution) +
+        " ብር";
+
+    document.getElementById(
+        "totalView"
+    ).textContent =
+        money(
+            members.length *
+            settings.contribution
+        ) + " ብር";
+
+    document.getElementById(
+        "prizeView"
+    ).textContent =
+        money(settings.prize) +
+        " ብር";
+}
+
+/* =========================
+   ADD MEMBER
+========================= */
+
+function addMember(){
+
+    const input =
+        document.getElementById("newMember");
+
+    if(!input){
+        alert("የአባል ማስገቢያ አልተገኘም።");
+        return;
+    }
+
+    const name =
+        input.value.trim();
+
+    if(name === ""){
+
+        alert("የአባል ስም ያስገቡ።");
+        input.focus();
+        return;
+    }
+
+    if(
+        members.some(function(member){
+            return member === name;
+        })
+    ){
+
+        alert("ይህ ስም ቀድሞውኑ አለ።");
+        input.focus();
+        return;
+    }
+
+    members.push(name);
+
+    if(
+        !Array.isArray(lottery.available)
+    ){
+        lottery.available = [];
+    }
+
+    lottery.available.push(name);
+
+    input.value = "";
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "✅ " +
+        name +
+        " እንደ አዲስ አባል ተጨመረ።"
+    );
+}
+
+/* =========================
+   ADMIN MEMBERS
+========================= */
+
+function renderAdminMembers(){
+
+    const box =
+        document.getElementById("adminMembers");
+
+    if(!box){
+        return;
+    }
+
+    if(!members.length){
+
+        box.innerHTML =
+            '<div class="empty">አባል የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        members.map(function(name,index){
+
+            return `
+                <div class="adminMember">
+
+                    <b style="color:#e8c65a">
+                        ${index + 1}
+                    </b>
+
+                    <input
+                        type="text"
+                        value="${safe(name)}"
+                        onchange="renameMember(${index},this.value)"
+                    >
+
+                    <button
+                        class="btn danger"
+                        type="button"
+                        onclick="deleteMember(${index})">
+                        ሰርዝ
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+/* =========================
+   RENAME
+========================= */
+
+function renameMember(index,newName){
+
+    newName =
+        String(newName).trim();
+
+    if(newName === ""){
+
+        alert("ስም ባዶ ሊሆን አይችልም።");
+
+        renderAdminMembers();
+
+        return;
+    }
+
+    const oldName =
+        members[index];
+
+    members[index] =
+        newName;
+
+    if(
+        Array.isArray(lottery.available)
+    ){
+
+        lottery.available =
+            lottery.available.map(function(name){
+
+                return name === oldName
+                    ? newName
+                    : name;
+
+            });
+    }
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "✏️ የአባል ስም ተቀይሯል።"
+    );
+}
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteMember(index){
+
+    if(members.length <= 1){
+
+        alert(
+            "ቢያንስ አንድ አባል መኖር አለበት።"
+        );
+
+        return;
+    }
+
+    const name =
+        members[index];
+
+    if(
+        !confirm(
+            name +
+            "ን ማስወገድ ይፈልጋሉ?"
+        )
+    ){
+        return;
+    }
+
+    members.splice(index,1);
+
+    if(
+        Array.isArray(lottery.available)
+    ){
+
+        const position =
+            lottery.available.indexOf(name);
+
+        if(position !== -1){
+
+            lottery.available.splice(
+                position,
+                1
+            );
+        }
+    }
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "🗑️ አባሉ ተሰርዟል።"
+    );
+}
+
+/* =========================
+   LOTTERY DRAW
+========================= */
+
+function drawLottery(){
+
+    if(spinning){
+        return;
+    }
+
+    if(
+        lottery.currentWeek <
+        settings.startWeek
+    ){
+
+        alert(
+            "እጣው ከሳምንት " +
+            settings.startWeek +
+            " ይጀምራል።"
+        );
+
+        return;
+    }
+
+    if(
+        lottery.currentWeek >
+        settings.cycle
+    ){
+
+        alert(
+            "የእቁብ ዑደቱ ተጠናቋል።"
+        );
+
+        return;
+    }
+
+    if(
+        !Array.isArray(lottery.available)
+    ){
+
+        lottery.available =
+            [...members];
+    }
+
+    if(
+        lottery.available.length === 0
+    ){
+
+        alert(
+            "የሚቀር አባል የለም።"
+        );
+
+        return;
+    }
+
+    spinning = true;
+
+    const button =
+        document.getElementById("drawButton");
+
+    button.disabled = true;
+    button.textContent = "⏳ እየወጣ ነው...";
+
+    const winnerIndex =
+        Math.floor(
+            Math.random() *
+            lottery.available.length
+        );
+
+    const winner =
+        lottery.available[winnerIndex];
+
+    const wheel =
+        document.getElementById("wheel");
+
+    const rotations =
+        5 + Math.floor(
+            Math.random() * 4
+        );
+
+    wheel.style.transform =
+        "rotate(" +
+        (rotations * 360 + winnerIndex * 35) +
+        "deg)";
+
+    setTimeout(function(){
+
+        lottery.winners.push({
+
+            week:
+                lottery.currentWeek,
+
+            name:
+                winner,
+
+            prize:
+                settings.prize,
+
+            date:
+                new Date().toLocaleDateString(
+                    "en-GB"
+                )
+
+        });
+
+        lottery.available.splice(
+            winnerIndex,
+            1
+        );
+
+        document.getElementById(
+            "winnerName"
+        ).textContent =
+            winner;
+
+        document.getElementById(
+            "winnerWeek"
+        ).textContent =
+            lottery.currentWeek;
+
+        document.getElementById(
+            "winnerPrize"
+        ).textContent =
+            money(settings.prize);
+
+        document.getElementById(
+            "result"
+        ).style.display =
+            "block";
+
+        document.getElementById(
+            "wheelText"
+        ).innerHTML =
+            "🎉<br>" +
+            safe(winner);
+
+        lottery.currentWeek++;
+
+        saveData();
+        renderHistory();
+        renderAdminLottery();
+
+        spinning = false;
+
+        button.disabled = false;
+        button.textContent = "🎲 እጣ አውጣ";
+
+        showToast(
+            "🎉 አሸናፊው " +
+            winner +
+            " ነው።"
+        );
+
+    },4000);
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+function renderHistory(){
+
+    const box =
+        document.getElementById("history");
+
+    if(!box){
+        return;
+    }
+
+    if(
+        !Array.isArray(lottery.winners) ||
+        lottery.winners.length === 0
+    ){
+
+        box.innerHTML =
+            '<div class="empty">እስካሁን የእጣ ታሪክ የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        [...lottery.winners]
+        .reverse()
+        .map(function(item){
+
+            return `
+                <div class="historyRow">
+
+                    <span>
+                        ሳምንት ${safe(item.week)}
+                    </span>
+
+                    <span>
+                        🎉 ${safe(item.name)}
+                    </span>
+
+                    <span>
+                        ${money(item.prize)} ብር
+                    </span>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+function loadSettings(){
+
+    const contribution =
+        document.getElementById(
+            "setContribution"
+        );
+
+    const prize =
+        document.getElementById(
+            "setPrize"
+        );
+
+    const start =
+        document.getElementById(
+            "setStart"
+        );
+
+    const cycle =
+        document.getElementById(
+            "setCycle"
+        );
+
+    if(contribution)
+        contribution.value =
+            settings.contribution;
+
+    if(prize)
+        prize.value =
+            settings.prize;
+
+    if(start)
+        start.value =
+            settings.startWeek;
+
+    if(cycle)
+        cycle.value =
+            settings.cycle;
+}
+
+function saveSettings(){
+
+    const contribution =
+        Number(
+            document.getElementById(
+                "setContribution"
+            ).value
+        );
+
+    const prize =
+        Number(
+            document.getElementById(
+                "setPrize"
+            ).value
+        );
+
+    const start =
+        Number(
+            document.getElementById(
+                "setStart"
+            ).value
+        );
+
+    const cycle =
+        Number(
+            document.getElementById(
+                "setCycle"
+            ).value
+        );
+
+    if(
+        contribution <= 0 ||
+        prize <= 0 ||
+        start <= 0 ||
+        cycle <= 0
+    ){
+
+        alert(
+            "እባክዎ ትክክለኛ ቁጥር ያስገቡ።"
+        );
+
+        return;
+    }
+
+    settings.contribution =
+        contribution;
+
+    settings.prize =
+        prize;
+
+    settings.startWeek =
+        start;
+
+    settings.cycle =
+        cycle;
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "✅ ቅንብሩ ተቀምጧል።"
+    );
+}
+
+/* =========================
+   NOTICES
+========================= */
+
+function renderNotices(){
+
+    const box =
+        document.getElementById("noticeList");
+
+    if(!box){
+        return;
+    }
+
+    if(!notices.length){
+
+        box.innerHTML =
+            '<div class="empty">ማሳወቂያ የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        notices.map(function(item){
+
+            return `
+                <div class="notice">
+
+                    <b>
+                        ${safe(item.title)}
+                    </b>
+
+                    <small>
+                        ${safe(item.text)}
+                    </small>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+function renderAdminNotices(){
+
+    const box =
+        document.getElementById(
+            "adminNotices"
+        );
+
+    if(!box){
+        return;
+    }
+
+    if(!notices.length){
+
+        box.innerHTML =
+            '<div class="empty">ማሳወቂያ የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        notices.map(function(item,index){
+
+            return `
+                <div class="notice">
+
+                    <b>
+                        ${safe(item.title)}
+                    </b>
+
+                    <small>
+                        ${safe(item.text)}
+                    </small>
+
+                    <button
+                        class="btn danger"
+                        type="button"
+                        onclick="deleteNotice(${index})">
+                        ሰርዝ
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+function addNotice(){
+
+    const title =
+        document.getElementById(
+            "noticeTitle"
+        ).value.trim();
+
+    const text =
+        document.getElementById(
+            "noticeMessage"
+        ).value.trim();
+
+    if(title === "" || text === ""){
+
+        alert(
+            "ርዕስ እና መልዕክት ያስገቡ።"
+        );
+
+        return;
+    }
+
+    notices.push({
+
+        title:title,
+        text:text
+
+    });
+
+    document.getElementById(
+        "noticeTitle"
+    ).value = "";
+
+    document.getElementById(
+        "noticeMessage"
+    ).value = "";
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "📢 ማሳወቂያው ተጨመረ።"
+    );
+}
+
+function deleteNotice(index){
+
+    if(
+        !confirm(
+            "ይህን ማሳወቂያ ማስወገድ ይፈልጋሉ?"
+        )
+    ){
+        return;
+    }
+
+    notices.splice(index,1);
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "🗑️ ማሳወቂያው ተሰርዟል።"
+    );
+}
+
+/* =========================
+   ADMIN LOTTERY
+========================= */
+
+function renderAdminLottery(){
+
+    const current =
+        document.getElementById(
+            "currentWeekAdmin"
+        );
+
+    const available =
+        document.getElementById(
+            "availableAdmin"
+        );
+
+    if(current){
+
+        current.textContent =
+            lottery.currentWeek;
+    }
+
+    if(available){
+
+        available.textContent =
+            Array.isArray(
+                lottery.available
+            )
+            ? lottery.available.length
+            : 0;
+    }
+}
+
+/* =========================
+   RESET LOTTERY
+========================= */
+
+function resetLottery(){
+
+    if(
+        !confirm(
+            "የእጣ ታሪክን እና የእጣ ሁኔታን ወደ አዲስ መጀመሪያ ማስመለስ ይፈልጋሉ?"
+        )
+    ){
+        return;
+    }
+
+    lottery = {
+
+        currentWeek:
+            settings.startWeek,
+
+        winners:[],
+
+        available:
+            [...members]
+
+    };
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "wheelText"
+    ).innerHTML =
+        "እጣ<br>ዝግጁ ነው";
+
+    document.getElementById(
+        "wheel"
+    ).style.transform =
+        "rotate(0deg)";
+
+    saveData();
+    renderAll();
+
+    showToast(
+        "🔄 እጣው እንደ አዲስ ተጀምሯል።"
+    );
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+function login(){
+
+    const username =
+        document.getElementById(
+            "username"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value.trim();
+
+    if(
+        username === "admin" &&
+        password === "1234"
+    ){
+
+        sessionStorage.setItem(
+            "alemayehu_admin",
+            "true"
+        );
+
+        document.getElementById(
+            "loginSection"
+        ).style.display =
+            "none";
+
+        document.getElementById(
+            "adminPanel"
+        ).style.display =
+            "block";
+
+        renderAll();
+
+        showToast(
+            "✅ Admin በትክክል ገብቷል።"
+        );
+
+    }else{
+
+        alert(
+            "❌ Username ወይም Password ትክክል አይደለም።"
+        );
+    }
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "alemayehu_admin"
+    );
+
+    document.getElementById(
+        "adminPanel"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "loginSection"
+    ).style.display =
+        "block";
+
+    showToast(
+        "🚪 Admin ወጥቷል።"
+    );
+}
+
+/* =========================
+   TABS
+========================= */
+
+function openTab(tabId,button){
+
+    document.querySelectorAll(
+        ".tabContent"
+    ).forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+    document.querySelectorAll(
+        ".tab"
+    ).forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+    const selected =
+        document.getElementById(tabId);
+
+    if(selected){
+
+        selected.classList.add("active");
+    }
+
+    if(button){
+
+        button.classList.add("active");
+    }
+}
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.style.display =
+        "block";
+
+    setTimeout(function(){
+
+        toast.style.display =
+            "none";
+
+    },3000);
+}
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        renderAll();
+
+        if(
+            sessionStorage.getItem(
+                "alemayehu_admin"
+            ) === "true"
+        ){
+
+            document.getElementById(
+                "loginSection"
+            ).style.display =
+                "none";
+
+            document.getElementById(
+                "adminPanel"
+            ).style.display =
+                "block";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
