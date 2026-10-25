@@ -1,36 +1,21 @@
 function addMember(){
+    const input = document.getElementById("newMember");
+    const name = input.value.trim();
 
- const input = document.getElementById("newMember");
+    if(!name){
+        alert("የአባል ስም ያስገቡ።");
+        return;
+    }
 
- const name = input.value.trim();
+    members.push(name);
 
- if(!name){
-   alert("የአባል ስም ያስገቡ።");
-   return;
- }
+    // አዲሱ አባል በእጣ ዝርዝር ውስጥ እንዲገባ
+    lotteryData.available.push(name);
 
- if(members.some(m => m === name)){
-   alert("ይህ ስም ቀድሞውኑ አለ።");
-   return;
- }
+    input.value = "";
 
- members.push(name);
+    saveAll();
+    renderAll();
 
- /*
-  * አዲሱ አባል እጣ ላይ እንዲገባ
-  */
- if(!lotteryData.available.includes(name)){
-   lotteryData.available.push(name);
- }
-
- input.value = "";
-
- saveAll();
-
- renderAll();
-
- showToast(
-   "✅ " + name + " እንደ አዲስ አባል ተጨምሯል።"
- );
-
+    showToast("✅ " + name + " እንደ አዲስ አባል ተጨመረ።");
 }
