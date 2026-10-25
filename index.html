@@ -1,4 +1,5 @@
 function addMember(){
+
     const input = document.getElementById("newMember");
     const name = input.value.trim();
 
@@ -9,7 +10,6 @@ function addMember(){
 
     members.push(name);
 
-    // አዲሱ አባል በእጣ ዝርዝር ውስጥ እንዲገባ
     lotteryData.available.push(name);
 
     input.value = "";
