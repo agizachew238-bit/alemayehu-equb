@@ -2,123 +2,472 @@
 <html lang="am">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>አለማየሁ እቁብ</title>
 
 <style>
-:root{
-  --green:#087f5b;
-  --dark:#064e3b;
-  --gold:#eab308;
-  --bg:#f3f7f4;
-  --white:#fff;
-  --red:#dc2626;
-  --text:#172b25;
-  --muted:#64748b;
-}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
 body{
-  margin:0;
-  font-family:Arial,"Noto Sans Ethiopic",sans-serif;
-  background:var(--bg);
-  color:var(--text);
+    margin:0;
+    background:#061711;
+    color:#f5f7f6;
+    font-family:Arial,"Noto Sans Ethiopic",sans-serif;
 }
+
+:root{
+    --gold:#e8c65a;
+    --gold2:#f5d978;
+    --green:#0d2a21;
+    --green2:#12382b;
+    --green3:#174b38;
+    --line:#285343;
+    --muted:#9eb5ab;
+    --red:#7b3030;
+}
+
 header{
-  background:linear-gradient(135deg,var(--dark),var(--green));
-  color:white;
-  padding:24px 16px;
-  text-align:center;
-  border-bottom:4px solid var(--gold);
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:#061711f5;
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--line);
 }
-header h1{margin:0 0 8px;font-size:27px}
-header p{margin:0;color:#d1fae5}
-.container{max-width:1100px;margin:auto;padding:16px}
-.card{
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 4px 16px #0000000b;
-  border:1px solid #e2e8f0;
+
+.nav{
+    max-width:1150px;
+    margin:auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
 }
-h2{font-size:19px;margin-top:0;color:var(--dark)}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px;
+
+.logo{
+    color:var(--gold);
+    font-size:23px;
+    font-weight:900;
 }
+
+nav{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:9px 12px;
+    border-radius:10px;
+}
+
+nav a:hover{
+    background:var(--green2);
+    color:var(--gold);
+}
+
+.wrap{
+    max-width:1150px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    text-align:center;
+    padding:65px 10px 45px;
+}
+
+.hero h1{
+    color:var(--gold);
+    font-size:clamp(38px,7vw,70px);
+    margin:10px 0;
+}
+
+.hero p{
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.9;
+    max-width:750px;
+    margin:auto;
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:12px 18px;
+    margin:5px;
+    cursor:pointer;
+    font-weight:900;
+    font-size:15px;
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.primary{
+    background:var(--gold);
+    color:#061711;
+}
+
+.primary:hover{
+    background:var(--gold2);
+}
+
+.secondary{
+    background:var(--green2);
+    color:white;
+    border:1px solid var(--line);
+}
+
+.danger{
+    background:var(--red);
+    color:white;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
 .stat{
-  padding:18px;
-  border-radius:13px;
-  background:#ecfdf5;
-  border-left:4px solid var(--green);
+    background:var(--green);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
 }
-.stat small{color:var(--muted)}
-.stat strong{
-  display:block;
-  font-size:25px;
-  margin-top:8px;
-  color:var(--dark);
-  overflow-wrap:anywhere;
+
+.stat b{
+    display:block;
+    color:var(--gold);
+    font-size:23px;
+    margin-top:8px;
 }
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border-radius:9px;
-  border:1px solid #cbd5e1;
-  font-size:15px;
+
+section{
+    padding:35px 0;
 }
-button{
-  background:var(--green);
-  color:white;
-  border:0;
-  cursor:pointer;
-  font-weight:bold;
+
+.card{
+    background:var(--green);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
 }
-button:hover{filter:brightness(.93)}
-button.secondary{background:#475569}
-button.gold{background:#b8860b}
-button.danger{background:var(--red)}
-button:disabled{opacity:.5;cursor:not-allowed}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{
-  padding:12px;
-  text-align:left;
-  border-bottom:1px solid #e2e8f0;
+
+h2{
+    margin-top:0;
 }
-th{background:#ecfdf5;color:var(--dark)}
-.table-wrap{overflow-x:auto}
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#dcfce7;
-  color:#166534;
-  font-size:12px;
+
+.members{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
 }
-.badge.no{background:#fee2e2;color:#991b1b}
-.hidden{display:none!important}
+
+.member{
+    background:#102f25;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:17px;
+}
+
+.memberNumber{
+    color:var(--gold);
+    font-weight:bold;
+    margin-right:7px;
+}
+
+.memberName{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.member small{
+    display:block;
+    color:var(--muted);
+    margin-top:7px;
+}
+
+.wheel{
+    width:230px;
+    height:230px;
+    margin:25px auto;
+    border-radius:50%;
+    border:8px solid var(--gold);
+    background:conic-gradient(
+        #173f30 0 20%,
+        #245b43 20% 40%,
+        #173f30 40% 60%,
+        #245b43 60% 80%,
+        #173f30 80%
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform 4s cubic-bezier(.12,.75,.12,1);
+}
+
+.wheel span{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:#061711;
+    border:2px solid var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-weight:bold;
+    padding:10px;
+}
+
+.result{
+    display:none;
+    background:#102f25;
+    border:1px solid #806d2d;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.winner{
+    color:var(--gold);
+    font-size:32px;
+    font-weight:900;
+    margin:10px;
+}
+
 .notice{
-  padding:12px;
-  border-radius:9px;
-  background:#fffbeb;
-  color:#92400e;
-  margin:10px 0;
-  overflow-wrap:anywhere;
+    padding:15px 0;
+    border-bottom:1px solid var(--line);
 }
-.success{background:#dcfce7;color:#166534}
-.error{background:#fee2e2;color:#991b1b}
-footer{text-align:center;padding:24px;color:var(--muted)}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.actions button{width:auto;flex:1;min-width:120px}
-label{font-size:14px;font-weight:bold}
-hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
-@media(max-width:600px){
-  header h1{font-size:22px}
-  .container{padding:10px}
-  .card{padding:13px}
-  .stat strong{font-size:21px}
+
+.notice:last-child{
+    border-bottom:0;
+}
+
+.notice b{
+    color:var(--gold);
+}
+
+.notice small{
+    display:block;
+    color:var(--muted);
+    margin-top:5px;
+    line-height:1.7;
+}
+
+.loginBox{
+    max-width:520px;
+}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #416656;
+    background:#061711;
+    color:white;
+    font-family:inherit;
+}
+
+input:focus,textarea:focus,select:focus{
+    outline:2px solid var(--gold);
+}
+
+.loginInputs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.adminPanel{
+    display:none;
+}
+
+.tabs{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin:20px 0;
+    border-bottom:1px solid var(--line);
+    padding-bottom:12px;
+}
+
+.tab{
+    background:#102f25;
+    color:white;
+    border:1px solid var(--line);
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.tab.active{
+    background:var(--gold);
+    color:#061711;
+}
+
+.tabContent{
+    display:none;
+}
+
+.tabContent.active{
+    display:block;
+}
+
+.adminGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.formCard{
+    background:#102f25;
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:18px;
+}
+
+.formCard h3{
+    color:var(--gold);
+    margin-top:0;
+}
+
+.formGroup{
+    margin-bottom:15px;
+}
+
+.formGroup label{
+    display:block;
+    margin-bottom:7px;
+    color:var(--muted);
+}
+
+.adminMember{
+    display:grid;
+    grid-template-columns:35px 1fr auto;
+    gap:8px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.adminMember .btn{
+    margin:0;
+    padding:8px 10px;
+    font-size:13px;
+}
+
+.historyRow{
+    display:grid;
+    grid-template-columns:100px 1fr 150px;
+    gap:10px;
+    padding:12px;
+    border-bottom:1px solid var(--line);
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
+}
+
+footer{
+    text-align:center;
+    color:var(--muted);
+    border-top:1px solid var(--line);
+    padding:25px;
+    margin-top:30px;
+}
+
+.toast{
+    display:none;
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:999;
+    background:#12382b;
+    border:1px solid var(--gold);
+    border-radius:12px;
+    padding:15px 18px;
+    max-width:320px;
+    box-shadow:0 10px 30px #0008;
+}
+
+.userInfo{
+    background:#102f25;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:15px;
+}
+
+.status{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:8px;
+}
+
+@media(max-width:800px){
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .members{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .adminGrid{
+        grid-template-columns:1fr;
+    }
+
+    .loginInputs{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:520px){
+    .nav{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    nav{
+        width:100%;
+        overflow:auto;
+    }
+
+    .members{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .historyRow{
+        grid-template-columns:70px 1fr;
+    }
+
+    .historyRow span:last-child{
+        display:none;
+    }
+
+    .wheel{
+        width:210px;
+        height:210px;
+    }
 }
 </style>
 </head>
@@ -126,764 +475,2207 @@ hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
 <body>
 
 <header>
-  <h1>💚 አለማየሁ እቁብ</h1>
-  <p>ዘመናዊ፣ ቀላል እና ስርዓት ያለው የእቁብ አስተዳደር</p>
+<div class="nav">
+
+<div class="logo">አለማየሁ እቁብ</div>
+
+<nav>
+<a href="#home">መነሻ</a>
+<a href="#members">አባላት</a>
+<a href="#lottery">እጣ</a>
+<a href="#notices">ማሳወቂያ</a>
+<a href="#admin">Admin</a>
+</nav>
+
+</div>
 </header>
 
-<main class="container">
+<main class="wrap">
 
-  <section class="card">
-    <h2>🔐 ወደ ስርዓቱ ግባ</h2>
-    <p>የእቁቡን መረጃ ለማየት በተመዘገበ የFirebase መለያ ግባ።</p>
+<section id="home" class="hero">
 
-    <label for="email">ኢሜይል</label>
-    <input id="email" type="email" placeholder="example@email.com"
-           autocomplete="username">
+<h1>አለማየሁ እቁብ</h1>
 
-    <label for="password">የይለፍ ቃል</label>
-    <input id="password" type="password" placeholder="የይለፍ ቃል"
-           autocomplete="current-password">
+<p>
+እቁባችንን በቀላሉ፣ በግልጽነት እና
+በዘመናዊ መንገድ ለማስተዳደር
+የተዘጋጀ ድረ-ገጽ።
+</p>
 
-    <button id="loginBtn" onclick="login()">ግባ</button>
-    <button id="logoutBtn" class="secondary hidden" onclick="logout()">ውጣ</button>
-    <div id="authMessage" class="notice">እባክህ በመለያህ ግባ።</div>
-  </section>
+<a class="btn primary" href="#lottery">🎯 እጣ ማውጫ</a>
+<a class="btn secondary" href="#members">👥 አባላት</a>
 
-  <div id="app" class="hidden">
+</section>
 
-    <section class="card">
-      <h2>📌 የእቁቡ መረጃ</h2>
-      <div class="grid">
-        <div class="stat">
-          <small>የአባላት ብዛት</small>
-          <strong id="memberCount">11</strong>
-        </div>
-        <div class="stat">
-          <small>የሳምንት መዋጮ</small>
-          <strong id="contributionAmount">10,000 ብር</strong>
-        </div>
-        <div class="stat">
-          <small>የዕጣ ክፍያ</small>
-          <strong id="payoutAmount">150,000 ብር</strong>
-        </div>
-        <div class="stat">
-          <small>የአሁኑ ሳምንት</small>
-          <strong id="weekNumber">1</strong>
-        </div>
-      </div>
-    </section>
+<div class="stats">
 
-    <section class="card">
-      <h2>👥 የአባላት ዝርዝር</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>ተ.ቁ</th>
-              <th>የአባል ስም</th>
-              <th>የክፍያ ሁኔታ</th>
-            </tr>
-          </thead>
-          <tbody id="membersTable"></tbody>
-        </table>
-      </div>
-    </section>
+<div class="stat">
+አባላት
+<b id="memberCount">0</b>
+</div>
 
-    <section class="card">
-      <h2>🎯 የዕጣ ታሪክ</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>ሳምንት</th>
-              <th>አሸናፊ</th>
-              <th>የተከፈለ ገንዘብ</th>
-              <th>ቀን</th>
-            </tr>
-          </thead>
-          <tbody id="drawTable">
-            <tr><td colspan="4">የዕጣ መረጃ ገና የለም።</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+<div class="stat">
+በሳምንት / አባል
+<b id="contributionView">0 ብር</b>
+</div>
 
-    <section id="adminPanel" class="hidden">
+<div class="stat">
+የሳምንት ጠቅላላ
+<b id="totalView">0 ብር</b>
+</div>
 
-      <section class="card">
-        <h2>🛠️ የአስተዳዳሪ ፓነል</h2>
-        <div class="notice">
-          አስተዳዳሪ ብቻ የክፍያ፣ የዕጣ እና የገንዘብ መረጃዎችን ማስተካከል ይችላል።
-        </div>
+<div class="stat">
+የእጣ ሽልማት
+<b id="prizeView">0 ብር</b>
+</div>
 
-        <h2>👤 የአድሚን ስም ማስተካከያ</h2>
-        <label for="adminUsername">የአድሚን ስም</label>
-        <input id="adminUsername" type="text" maxlength="50"
-               placeholder="አዲስ የአድሚን ስም">
+</div>
 
-        <button id="saveUsernameBtn" onclick="saveAdminUsername()">
-          የአድሚን ስም አስቀምጥ
-        </button>
+<section id="members">
 
-        <hr>
+<h2>👥 የእቁብ አባላት</h2>
 
-        <h2>🔑 የይለፍ ቃል መቀየሪያ</h2>
+<div class="members" id="memberList">
+<div class="empty">መረጃ እየጫነ ነው...</div>
+</div>
 
-        <label for="currentAdminPassword">አሁን ያለው የይለፍ ቃል</label>
-        <input id="currentAdminPassword" type="password"
-               autocomplete="current-password">
+</section>
 
-        <label for="newAdminPassword">አዲስ የይለፍ ቃል</label>
-        <input id="newAdminPassword" type="password"
-               autocomplete="new-password">
+<section id="lottery">
 
-        <label for="confirmAdminPassword">አዲሱን የይለፍ ቃል ድገም</label>
-        <input id="confirmAdminPassword" type="password"
-               autocomplete="new-password">
+<div class="card">
 
-        <button id="changePasswordBtn" onclick="changeAdminPassword()">
-          የይለፍ ቃል ቀይር
-        </button>
+<h2>🎯 የእጣ ማውጫ</h2>
 
-        <div id="adminAccountMessage" class="notice">
-          የአድሚን መለያህን በደህንነት አስተዳድር።
-        </div>
+<p>
+እጣው ከ
+<b id="startWeekView">6</b>
+ኛ ሳምንት ይጀምራል።
+</p>
 
-        <hr>
+<div class="wheel" id="wheel">
 
-        <label for="weekSelect">ሳምንት ምረጥ</label>
-        <select id="weekSelect">
-          <option value="1">ሳምንት 1</option>
-          <option value="2">ሳምንት 2</option>
-          <option value="3">ሳምንት 3</option>
-          <option value="4">ሳምንት 4</option>
-          <option value="5">ሳምንት 5</option>
-          <option value="6">ሳምንት 6</option>
-          <option value="7">ሳምንት 7</option>
-          <option value="8">ሳምንት 8</option>
-          <option value="9">ሳምንት 9</option>
-          <option value="10">ሳምንት 10</option>
-          <option value="11">ሳምንት 11</option>
-          <option value="12">ሳምንት 12</option>
-          <option value="13">ሳምንት 13</option>
-          <option value="14">ሳምንት 14</option>
-          <option value="15">ሳምንት 15</option>
-        </select>
+<span id="wheelText">
+እጣ<br>
+ዝግጁ ነው
+</span>
 
-        <label for="memberSelect">አባል ምረጥ</label>
-        <select id="memberSelect"></select>
+</div>
 
-        <button onclick="markPaid()">ክፍያውን እንደተከፈለ ምልክት አድርግ</button>
-        <button class="secondary" onclick="markUnpaid()">የክፍያ ምልክቱን መልስ</button>
+<div style="text-align:center">
 
-        <hr>
+<button
+class="btn primary"
+id="drawButton"
+type="button"
+onclick="drawLottery()">
+🎲 እጣ አውጣ
+</button>
 
-        <h2>🎲 የዕጣ አስተዳደር</h2>
-        <p>ዕጣው ከ6ኛው ሳምንት ጀምሮ እንዲጀምር ተዘጋጅቷል።</p>
-        <button class="gold" onclick="runDraw()">ዕጣ አውጣ</button>
-        <div id="drawMessage" class="notice hidden"></div>
+</div>
 
-        <hr>
+<div class="result" id="result">
 
-        <h2>💰 የገንዘብ ሪፖርት</h2>
-        <div class="grid">
-          <div class="stat">
-            <small>ጠቅላላ የተከፈለ መዋጮ</small>
-            <strong id="totalContributions">0 ብር</strong>
-          </div>
-          <div class="stat">
-            <small>ጠቅላላ የተከፈለ ዕጣ</small>
-            <strong id="totalPayouts">0 ብር</strong>
-          </div>
-          <div class="stat">
-            <small>ቀሪ ሂሳብ</small>
-            <strong id="balance">0 ብር</strong>
-          </div>
-        </div>
+<div>🎉 አሸናፊው</div>
 
-        <button class="secondary" onclick="refreshData()">መረጃን አድስ</button>
-      </section>
+<div class="winner" id="winnerName"></div>
 
-    </section>
-  </div>
+<div>
+ሳምንት
+<b id="winnerWeek"></b>
+</div>
+
+<div>
+<span id="winnerPrize"></span>
+ብር
+</div>
+
+</div>
+
+<h2 style="margin-top:30px">📜 የእጣ ታሪክ</h2>
+
+<div id="history"></div>
+
+</div>
+
+</section>
+
+<section id="notices">
+
+<div class="card">
+
+<h2>🔔 ማሳወቂያዎች</h2>
+
+<div id="noticeList"></div>
+
+</div>
+
+</section>
+
+<section id="admin">
+
+<div class="card">
+
+<h2>🔐 የሰብሳቢ Admin</h2>
+
+<div id="loginSection" class="loginBox">
+
+<p style="color:#9eb5ab">
+Admin ለመግባት Email እና Password ይጠቀሙ።
+</p>
+
+<div class="loginInputs">
+
+<input
+id="email"
+type="email"
+placeholder="Admin Email"
+autocomplete="username">
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+autocomplete="current-password">
+
+</div>
+
+<button
+class="btn primary"
+type="button"
+onclick="login()">
+🔓 ግባ
+</button>
+
+<div class="status">
+የAdmin password በዚህ HTML ውስጥ አይቀመጥም።
+</div>
+
+</div>
+
+<div id="adminPanel" class="adminPanel">
+
+<div class="userInfo">
+Admin:
+<b id="adminNameView">Admin</b>
+<br>
+<span id="adminEmailView"></span>
+</div>
+
+<div class="tabs">
+
+<button
+class="tab active"
+type="button"
+onclick="openTab('membersTab',this)">
+👥 አባላት
+</button>
+
+<button
+class="tab"
+type="button"
+onclick="openTab('settingsTab',this)">
+⚙️ ቅንብር
+</button>
+
+<button
+class="tab"
+type="button"
+onclick="openTab('noticeTab',this)">
+🔔 ማሳወቂያ
+</button>
+
+<button
+class="tab"
+type="button"
+onclick="openTab('lotteryTab',this)">
+🎯 እጣ
+</button>
+
+<button
+class="tab"
+type="button"
+onclick="openTab('accountTab',this)">
+🔐 Account
+</button>
+
+</div>
+
+<div id="membersTab" class="tabContent active">
+
+<div class="adminGrid">
+
+<div class="formCard">
+
+<h3>➕ አዲስ አባል ጨምር</h3>
+
+<div class="formGroup">
+
+<label>የአባል ስም</label>
+
+<input
+id="newMember"
+type="text"
+placeholder="ለምሳሌ፦ ሚካኤል">
+
+</div>
+
+<button
+class="btn primary"
+type="button"
+onclick="addMember()">
+➕ አባል ጨምር
+</button>
+
+</div>
+
+<div class="formCard">
+
+<h3>👥 የአባላት ዝርዝር</h3>
+
+<div id="adminMembers"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="settingsTab" class="tabContent">
+
+<div class="formCard">
+
+<h3>⚙️ የእቁብ ቅንብር</h3>
+
+<div class="formGroup">
+<label>በሳምንት / አባል</label>
+<input id="setContribution" type="number">
+</div>
+
+<div class="formGroup">
+<label>የእጣ ሽልማት</label>
+<input id="setPrize" type="number">
+</div>
+
+<div class="formGroup">
+<label>እጣ መጀመሪያ ሳምንት</label>
+<input id="setStart" type="number" min="1">
+</div>
+
+<div class="formGroup">
+<label>የዑደት ሳምንት</label>
+<input id="setCycle" type="number" min="1">
+</div>
+
+<button
+class="btn primary"
+type="button"
+onclick="saveSettings()">
+💾 ቅንብሩን አስቀምጥ
+</button>
+
+</div>
+
+</div>
+
+<div id="noticeTab" class="tabContent">
+
+<div class="adminGrid">
+
+<div class="formCard">
+
+<h3>📢 ማሳወቂያ ጨምር</h3>
+
+<div class="formGroup">
+<label>ርዕስ</label>
+<input
+id="noticeTitle"
+type="text"
+placeholder="ርዕስ">
+</div>
+
+<div class="formGroup">
+<label>መልዕክት</label>
+<textarea
+id="noticeMessage"
+placeholder="መልዕክት"></textarea>
+</div>
+
+<button
+class="btn primary"
+type="button"
+onclick="addNotice()">
+📢 ማሳወቂያ ላክ
+</button>
+
+</div>
+
+<div class="formCard">
+
+<h3>📋 የተላኩ ማሳወቂያዎች</h3>
+
+<div id="adminNotices"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="lotteryTab" class="tabContent">
+
+<div class="formCard">
+
+<h3>🎯 የእጣ መቆጣጠሪያ</h3>
+
+<p>
+አሁኑ ሳምንት:
+<b id="currentWeekAdmin">-</b>
+</p>
+
+<p>
+የቀሩ አባላት:
+<b id="availableAdmin">-</b>
+</p>
+
+<button
+class="btn danger"
+type="button"
+onclick="resetLottery()">
+🔄 እጣውን እንደ አዲስ ጀምር
+</button>
+
+</div>
+
+</div>
+
+<div id="accountTab" class="tabContent">
+
+<div class="adminGrid">
+
+<div class="formCard">
+
+<h3>👤 Username ቀይር</h3>
+
+<div class="formGroup">
+
+<label>አዲስ Username</label>
+
+<input
+id="newUsername"
+type="text"
+placeholder="ለምሳሌ፦ Alemayehu Admin">
+
+</div>
+
+<button
+class="btn primary"
+type="button"
+onclick="changeUsername()">
+💾 Username አስቀምጥ
+</button>
+
+<p class="status">
+ይህ የAdmin ስም/display name ነው።
+Login email አይቀይርም።
+</p>
+
+</div>
+
+<div class="formCard">
+
+<h3>🔑 Password ቀይር</h3>
+
+<div class="formGroup">
+
+<label>አሁኑ Password</label>
+
+<input
+id="currentPassword"
+type="password"
+autocomplete="current-password">
+
+</div>
+
+<div class="formGroup">
+
+<label>አዲስ Password</label>
+
+<input
+id="newPassword"
+type="password"
+autocomplete="new-password">
+
+</div>
+
+<div class="formGroup">
+
+<label>አዲሱን Password እንደገና አስገባ</label>
+
+<input
+id="confirmPassword"
+type="password"
+autocomplete="new-password">
+
+</div>
+
+<button
+class="btn primary"
+type="button"
+onclick="changePassword()">
+🔑 Password ቀይር
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<button
+class="btn secondary"
+type="button"
+onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 </main>
 
-<footer>© 2026 አለማየሁ እቁብ</footer>
+<footer>
+© አለማየሁ እቁብ
+</footer>
+
+<div id="toast" class="toast"></div>
 
 <script type="module">
-import { initializeApp } from
-  "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  EmailAuthProvider,
-  reauthenticateWithCredential,
-  updatePassword
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword,
+    updateProfile
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 import {
-  getDatabase,
-  ref,
-  get,
-  set,
-  update
+    getDatabase,
+    ref,
+    get,
+    set,
+    update,
+    push,
+    remove
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
+
+/* =========================
+   FIREBASE
+========================= */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCrw9iYsLyW-5QNLw8dQtX0bHUFb-RZfyA",
-  authDomain: "alemayehu-equb.firebaseapp.com",
-  projectId: "alemayehu-equb",
-  storageBucket: "alemayehu-equb.firebasestorage.app",
-  messagingSenderId: "901654220346",
-  appId: "1:901654220346:web:f7663e1f34ebe43dcf2f03",
-  measurementId: "G-GGMKD16XWD",
-  databaseURL: "https://alemayehu-equb-default-rtdb.firebaseio.com"
+    apiKey: "AIzaSyCrw9iYsLyW-5QNLw8dQtX0bHUFb-RZfyA",
+    authDomain: "alemayehu-equb.firebaseapp.com",
+    projectId: "alemayehu-equb",
+    storageBucket: "alemayehu-equb.firebasestorage.app",
+    messagingSenderId: "901654220346",
+    appId: "1:901654220346:web:f7663e1f34ebe43dcf2f03",
+    measurementId: "G-GGMKD16XWD",
+    databaseURL: "https://alemayehu-equb-default-rtdb.firebaseio.com"
 };
 
-const ADMIN_UID = "NOqlmtXemfUBFi2Yy0FFUsc1ZLJ2";
-const CONTRIBUTION = 10000;
-const PAYOUT = 150000;
-const TOTAL_WEEKS = 15;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const ADMIN_UID =
+    "NOqlmtXemfUBFi2Yy0FFUsc1ZLJ2";
+
+
+/* =========================
+   DEFAULT DATA
+========================= */
 
 const defaultMembers = [
-  {id:"m01",name:"አለማየሁ"},
-  {id:"m02",name:"ቃላአብ"},
-  {id:"m03",name:"ፌቨን"},
-  {id:"m04",name:"ፍሬ ሰንበት"},
-  {id:"m05",name:"አየናቸው"},
-  {id:"m06",name:"ጫላ"},
-  {id:"m07",name:"ቦጃ"},
-  {id:"m08",name:"አለማየሁ"},
-  {id:"m09",name:"ቃላአብ እና ፍሬ"},
-  {id:"m10",name:"ሞገስ"},
-  {id:"m11",name:"መልካሙ"}
+    "አለማየሁ",
+    "ቃላአብ",
+    "ፌቨን",
+    "ፍሬ ሰንበት",
+    "አየናቸው",
+    "ጫላ",
+    "ቦጃ",
+    "አለማየሁ",
+    "ቃላአብ እና ፍሬ",
+    "ሞገስ",
+    "መልካሙ"
 ];
 
-const appFirebase = initializeApp(firebaseConfig);
-const auth = getAuth(appFirebase);
-const db = getDatabase(appFirebase);
+const defaultSettings = {
+    contribution:10000,
+    prize:150000,
+    startWeek:6,
+    cycle:15
+};
 
-let currentUser = null;
-let isAdmin = false;
+const defaultNotices = [
+    {
+        title:"እንኳን ደህና መጡ",
+        text:"የአለማየሁ እቁብ ድረ-ገጽ ነው።"
+    },
+    {
+        title:"የሳምንቱ ክፍያ",
+        text:"እያንዳንዱ አባል 10,000 ብር ይከፍላል።"
+    }
+];
+
 let members = [];
-let publicData = {};
-let privateData = {};
-
-const $ = id => document.getElementById(id);
-const money = n => Number(n || 0).toLocaleString("en-US") + " ብር";
-
-function message(id, text, type="notice") {
-  const el = $(id);
-  el.textContent = text;
-  el.className = type;
-}
-
-function showDatabaseError(error) {
-  console.error("Database error:", error);
-  message(
-    "authMessage",
-    "ዳታቤዙን ማንበብ ወይም መጻፍ አልተቻለም። Firebase Database Rules እና ግንኙነቱን አረጋግጥ።",
-    "notice error"
-  );
-}
-
-window.login = async function() {
-  const email = $("email").value.trim();
-  const password = $("password").value;
-
-  if (!email || !password) {
-    message("authMessage","ኢሜይልና የይለፍ ቃል አስገባ።","notice error");
-    return;
-  }
-
-  $("loginBtn").disabled = true;
-
-  try {
-    await signInWithEmailAndPassword(auth,email,password);
-    $("password").value = "";
-  } catch (error) {
-    console.error(error);
-    message(
-      "authMessage",
-      "መግባት አልተሳካም። ኢሜይሉን፣ የይለፍ ቃሉንና Firebase Authentication አረጋግጥ።",
-      "notice error"
-    );
-  } finally {
-    $("loginBtn").disabled = false;
-  }
+let settings = {...defaultSettings};
+let notices = [];
+let lottery = {
+    currentWeek:6,
+    winners:[],
+    available:[]
 };
 
-window.logout = async function() {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    alert("መውጣት አልተሳካም።");
-  }
-};
+let spinning = false;
 
-onAuthStateChanged(auth, async user => {
-  currentUser = user;
-  isAdmin = !!user && user.uid === ADMIN_UID;
 
-  $("app").classList.toggle("hidden",!user);
-  $("loginBtn").classList.toggle("hidden",!!user);
-  $("logoutBtn").classList.toggle("hidden",!user);
-  $("adminPanel").classList.toggle("hidden",!isAdmin);
+/* =========================
+   ADMIN CHECK
+========================= */
 
-  if (!user) {
-    message("authMessage","እባክህ በመለያህ ግባ።","notice");
-    return;
-  }
+function isAdmin(){
 
-  message(
-    "authMessage",
-    isAdmin ? "እንኳን ደህና መጣህ፣ አስተዳዳሪ።" : "በተሳካ ሁኔታ ገብተሃል።",
-    "notice success"
-  );
+    const user = auth.currentUser;
 
-  try {
-    if (isAdmin) {
-      await ensureInitialData();
-      await loadAdminProfile();
-    }
-    await refreshData();
-  } catch (error) {
-    showDatabaseError(error);
-  }
-});
-
-async function ensureInitialData() {
-  if (!isAdmin) return;
-
-  const membersRef = ref(db,"public/members");
-  const existingMembers = await get(membersRef);
-
-  if (!existingMembers.exists()) {
-    const obj = {};
-    defaultMembers.forEach(m => {
-      obj[m.id] = {name:m.name};
-    });
-    await set(membersRef,obj);
-  }
-
-  const settingsRef = ref(db,"public/settings");
-  const settings = await get(settingsRef);
-
-  if (!settings.exists()) {
-    await set(settingsRef,{
-      contribution:CONTRIBUTION,
-      payout:PAYOUT,
-      totalWeeks:TOTAL_WEEKS,
-      drawStartsWeek:6,
-      currentWeek:1
-    });
-  }
-
-  const privateRef = ref(db,"private/accounting");
-  const privateSnapshot = await get(privateRef);
-
-  if (!privateSnapshot.exists()) {
-    await set(privateRef,{
-      payments:{},
-      payouts:{},
-      openingBalance:0
-    });
-  }
-
-  const drawsRef = ref(db,"public/draws");
-  const drawsSnapshot = await get(drawsRef);
-
-  if (!drawsSnapshot.exists()) {
-    await set(drawsRef,{});
-  }
+    return !!user && user.uid === ADMIN_UID;
 }
 
-async function loadAdminProfile() {
-  if (!isAdmin) return;
 
-  try {
-    const profileSnap = await get(ref(db,"private/adminProfile/username"));
-    if (profileSnap.exists()) {
-      $("adminUsername").value = profileSnap.val();
-    }
-  } catch (error) {
-    console.warn("Admin profile could not be read:", error);
-  }
+/* =========================
+   SAFE TEXT
+========================= */
+
+function safe(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
-window.saveAdminUsername = async function() {
-  if (!currentUser || !isAdmin) {
-    alert("ይህን ስራ ማድረግ የሚችለው አስተዳዳሪ ብቻ ነው።");
-    return;
-  }
 
-  const username = $("adminUsername").value.trim();
+/* =========================
+   MONEY
+========================= */
 
-  if (username.length < 3) {
-    message("adminAccountMessage","ስሙ ቢያንስ 3 ቁምፊዎች ይኑሩት።","notice error");
-    return;
-  }
+function money(value){
 
-  $("saveUsernameBtn").disabled = true;
+    return Number(value || 0)
+        .toLocaleString("en-US");
+}
 
-  try {
-    await set(ref(db,"private/adminProfile/username"),username);
 
-    message(
-      "adminAccountMessage",
-      "የአድሚን ስም በተሳካ ሁኔታ ተቀምጧል።",
-      "notice success"
-    );
-  } catch (error) {
-    console.error(error);
-    message(
-      "adminAccountMessage",
-      "ስሙን ማስቀመጥ አልተቻለም። Firebase Database Rules አረጋግጥ።",
-      "notice error"
-    );
-  } finally {
-    $("saveUsernameBtn").disabled = false;
-  }
-};
+/* =========================
+   TOAST
+========================= */
 
-window.changeAdminPassword = async function() {
-  if (!currentUser || !isAdmin || !currentUser.email) {
-    alert("አስተዳዳሪው በትክክለኛ መለያ መግባት አለበት።");
-    return;
-  }
+function showToast(message){
 
-  const currentPassword = $("currentAdminPassword").value;
-  const newPassword = $("newAdminPassword").value;
-  const confirmPassword = $("confirmAdminPassword").value;
+    const toast =
+        document.getElementById("toast");
 
-  if (!currentPassword || !newPassword || !confirmPassword) {
-    message("adminAccountMessage","ሦሱንም ቦታዎች ሙላ።","notice error");
-    return;
-  }
+    toast.textContent = message;
+    toast.style.display = "block";
 
-  if (newPassword.length < 6) {
-    message("adminAccountMessage","አዲሱ የይለፍ ቃል ቢያንስ 6 ቁምፊዎች ይኑሩት።","notice error");
-    return;
-  }
+    setTimeout(function(){
 
-  if (newPassword !== confirmPassword) {
-    message("adminAccountMessage","አዲሶቹ የይለፍ ቃሎች አይዛመዱም።","notice error");
-    return;
-  }
+        toast.style.display = "none";
 
-  if (currentPassword === newPassword) {
-    message("adminAccountMessage","አዲሱ የይለፍ ቃል ከአሁኑ የተለየ መሆን አለበት።","notice error");
-    return;
-  }
+    },3000);
+}
 
-  $("changePasswordBtn").disabled = true;
 
-  try {
-    const credential = EmailAuthProvider.credential(
-      currentUser.email,
-      currentPassword
-    );
+/* =========================
+   FIREBASE INITIAL DATA
+========================= */
 
-    await reauthenticateWithCredential(currentUser,credential);
-    await updatePassword(currentUser,newPassword);
+async function ensureInitialData(){
 
-    $("currentAdminPassword").value = "";
-    $("newAdminPassword").value = "";
-    $("confirmAdminPassword").value = "";
-
-    message(
-      "adminAccountMessage",
-      "የይለፍ ቃልህ ተቀይሯል። በአዲሱ የይለፍ ቃል ግባ።",
-      "notice success"
-    );
-  } catch (error) {
-    console.error(error);
-
-    let text = "የይለፍ ቃሉ አልተቀየረም። የአሁኑን ቃልና የFirebase ማዋቀር አረጋግጥ።";
-
-    if (error.code === "auth/wrong-password" ||
-        error.code === "auth/invalid-credential") {
-      text = "ያስገባኸው የአሁኑ የይለፍ ቃል ትክክል አይደለም።";
-    } else if (error.code === "auth/weak-password") {
-      text = "አዲሱ የይለፍ ቃል በቂ ጥንካሬ የለውም።";
-    } else if (error.code === "auth/too-many-requests") {
-      text = "ብዙ ጊዜ ሞክረሃል። ትንሽ ጠብቀህ እንደገና ሞክር።";
+    if(!isAdmin()){
+        return;
     }
 
-    message("adminAccountMessage",text,"notice error");
-  } finally {
-    $("changePasswordBtn").disabled = false;
-  }
-};
+    try{
 
-window.refreshData = async function() {
-  if (!currentUser) return;
+        const membersSnap =
+            await get(ref(db,"public/members"));
 
-  const [mSnap,sSnap,dSnap] = await Promise.all([
-    get(ref(db,"public/members")),
-    get(ref(db,"public/settings")),
-    get(ref(db,"public/draws"))
-  ]);
+        if(!membersSnap.exists()){
 
-  members = [];
+            await set(
+                ref(db,"public/members"),
+                defaultMembers
+            );
+        }
 
-  if (mSnap.exists()) {
-    const value = mSnap.val();
-    members = Object.entries(value).map(([id,m])=>({id,...m}));
-  }
+        const settingsSnap =
+            await get(ref(db,"public/settings"));
 
-  publicData = {
-    settings:sSnap.exists() ? sSnap.val() : {},
-    draws:dSnap.exists() ? dSnap.val() : {}
-  };
+        if(!settingsSnap.exists()){
 
-  if (isAdmin) {
-    const pSnap = await get(ref(db,"private/accounting"));
-    privateData = pSnap.exists()
-      ? pSnap.val()
-      : {payments:{},payouts:{},openingBalance:0};
-  } else {
-    privateData = {};
-  }
+            await set(
+                ref(db,"public/settings"),
+                defaultSettings
+            );
+        }
 
-  renderMembers();
-  renderDraws();
+        const noticesSnap =
+            await get(ref(db,"public/notices"));
 
-  const settings = publicData.settings || {};
-  $("weekNumber").textContent = settings.currentWeek || 1;
-  $("memberCount").textContent = members.length;
-  $("contributionAmount").textContent = money(settings.contribution || CONTRIBUTION);
-  $("payoutAmount").textContent = money(settings.payout || PAYOUT);
+        if(!noticesSnap.exists()){
 
-  if (isAdmin) renderAdmin();
-};
+            await set(
+                ref(db,"public/notices"),
+                defaultNotices
+            );
+        }
 
-function renderMembers() {
-  const settings = publicData.settings || {};
-  const week = Number(
-    $("weekSelect").value || settings.currentWeek || 1
-  );
+        const drawsSnap =
+            await get(ref(db,"public/draws"));
 
-  const payments = privateData.payments || {};
-  const tbody = $("membersTable");
-  tbody.innerHTML = "";
+        if(!drawsSnap.exists()){
 
-  const memberSelect = $("memberSelect");
-  memberSelect.innerHTML = "";
+            await set(
+                ref(db,"public/draws"),
+                {
+                    currentWeek:6,
+                    winners:[],
+                    available:[...defaultMembers]
+                }
+            );
+        }
 
-  members.forEach((m,i)=>{
-    const option = document.createElement("option");
-    option.value = m.id;
-    option.textContent = m.name;
-    memberSelect.appendChild(option);
+        const profileSnap =
+            await get(
+                ref(
+                    db,
+                    "private/adminProfile/username"
+                )
+            );
 
-    const paid = !!(payments[week] && payments[week][m.id]);
-    const tr = document.createElement("tr");
+        if(!profileSnap.exists()){
 
-    const numberCell = document.createElement("td");
-    numberCell.textContent = i + 1;
+            const user = auth.currentUser;
 
-    const nameCell = document.createElement("td");
-    nameCell.textContent = m.name;
+            const name =
+                user?.displayName ||
+                "Admin";
 
-    const statusCell = document.createElement("td");
-    const badge = document.createElement("span");
+            await set(
+                ref(
+                    db,
+                    "private/adminProfile/username"
+                ),
+                name
+            );
+        }
 
-    badge.className = "badge" + (isAdmin && !paid ? " no" : "");
-    badge.textContent = isAdmin
-      ? (paid ? "ተከፍሏል" : "አልተከፈለም")
-      : "የክፍያ መረጃ በአስተዳዳሪ ይመራል";
+    }catch(error){
 
-    statusCell.appendChild(badge);
-    tr.append(numberCell,nameCell,statusCell);
-    tbody.appendChild(tr);
-  });
+        console.error(error);
+
+        showToast(
+            "⚠️ Firebase መረጃ ማስጀመር አልተቻለም።"
+        );
+    }
 }
 
-function renderDraws() {
-  const draws = publicData.draws || {};
-  const entries = Object.entries(draws)
-    .sort((a,b)=>Number(a[0])-Number(b[0]));
 
-  const tbody = $("drawTable");
-  tbody.innerHTML = "";
+/* =========================
+   LOAD DATA
+========================= */
 
-  if (!entries.length) {
-    tbody.innerHTML = '<tr><td colspan="4">የዕጣ መረጃ ገና የለም።</td></tr>';
-    return;
-  }
+async function loadData(){
 
-  entries.forEach(([week,d])=>{
-    const tr = document.createElement("tr");
+    try{
 
-    const weekCell = document.createElement("td");
-    weekCell.textContent = week;
+        const membersSnap =
+            await get(ref(db,"public/members"));
 
-    const winnerCell = document.createElement("td");
-    winnerCell.textContent = d.winnerName || "—";
+        const settingsSnap =
+            await get(ref(db,"public/settings"));
 
-    const amountCell = document.createElement("td");
-    amountCell.textContent = money(d.amount);
+        const noticesSnap =
+            await get(ref(db,"public/notices"));
 
-    const dateCell = document.createElement("td");
-    dateCell.textContent = d.date
-      ? new Date(d.date).toLocaleDateString("am-ET")
-      : "-";
+        const drawsSnap =
+            await get(ref(db,"public/draws"));
 
-    tr.append(weekCell,winnerCell,amountCell,dateCell);
-    tbody.appendChild(tr);
-  });
+        if(membersSnap.exists()){
+
+            const value =
+                membersSnap.val();
+
+            members =
+                Array.isArray(value)
+                    ? value
+                    : Object.values(value || {});
+        }
+
+        if(settingsSnap.exists()){
+
+            settings =
+                {
+                    ...defaultSettings,
+                    ...settingsSnap.val()
+                };
+        }
+
+        if(noticesSnap.exists()){
+
+            const value =
+                noticesSnap.val();
+
+            notices =
+                Array.isArray(value)
+                    ? value
+                    : Object.values(value || {});
+        }
+
+        if(drawsSnap.exists()){
+
+            lottery =
+                {
+                    currentWeek:
+                        drawsSnap.val().currentWeek ?? 6,
+
+                    winners:
+                        drawsSnap.val().winners || [],
+
+                    available:
+                        drawsSnap.val().available || []
+                };
+        }
+
+        renderAll();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            "❌ Firebase መረጃ ማንበብ አልተቻለም።"
+        );
+    }
 }
 
-function renderAdmin() {
-  const payments = privateData.payments || {};
-  const payouts = privateData.payouts || {};
 
-  let contributionTotal = 0;
-  let payoutTotal = 0;
+/* =========================
+   SAVE LOTTERY
+========================= */
 
-  Object.values(payments).forEach(weekPayments=>{
-    Object.values(weekPayments || {}).forEach(paid=>{
-      if (paid) contributionTotal += CONTRIBUTION;
-    });
-  });
+async function saveLottery(){
 
-  Object.values(payouts).forEach(p=>{
-    payoutTotal += Number(p.amount || 0);
-  });
-
-  const opening = Number(privateData.openingBalance || 0);
-
-  $("totalContributions").textContent = money(contributionTotal);
-  $("totalPayouts").textContent = money(payoutTotal);
-  $("balance").textContent = money(opening + contributionTotal - payoutTotal);
-
-  renderMembers();
-}
-
-window.markPaid = async function() {
-  if (!isAdmin) {
-    alert("ይህን ስራ ማድረግ የሚችለው አስተዳዳሪ ብቻ ነው።");
-    return;
-  }
-
-  const week = $("weekSelect").value;
-  const memberId = $("memberSelect").value;
-
-  if (!memberId) return alert("አባል ምረጥ።");
-
-  const existing = privateData.payments?.[week]?.[memberId];
-
-  if (existing) {
-    return alert("ይህ አባል ለዚህ ሳምንት ክፍያው ተመዝግቧል።");
-  }
-
-  try {
-    await set(ref(db,`private/accounting/payments/${week}/${memberId}`),true);
-    await refreshData();
-    alert("ክፍያው ተመዝግቧል።");
-  } catch(error) {
-    console.error(error);
-    alert("ክፍያው አልተመዘገበም። Firebase Rules እና ግንኙነቱን ተመልከት።");
-  }
-};
-
-window.markUnpaid = async function() {
-  if (!isAdmin) {
-    alert("አስተዳዳሪ ብቻ።");
-    return;
-  }
-
-  const week = $("weekSelect").value;
-  const memberId = $("memberSelect").value;
-
-  if (!memberId) return alert("አባል ምረጥ።");
-
-  if (!confirm("የዚህን ክፍያ ምልክት ማስወገድ ትፈልጋለህ?")) return;
-
-  try {
-    await set(ref(db,`private/accounting/payments/${week}/${memberId}`),null);
-    await refreshData();
-  } catch(error) {
-    console.error(error);
-    alert("መረጃውን ማስተካከል አልተቻለም።");
-  }
-};
-
-window.runDraw = async function() {
-  if (!isAdmin) {
-    alert("አስተዳዳሪ ብቻ ዕጣ ማውጣት ይችላል።");
-    return;
-  }
-
-  const settings = publicData.settings || {};
-  const week = Number(settings.currentWeek || 1);
-  const startWeek = Number(settings.drawStartsWeek || 6);
-  const totalWeeks = Number(settings.totalWeeks || TOTAL_WEEKS);
-  const payout = Number(settings.payout || PAYOUT);
-
-  if (week < startWeek) {
-    return alert(`ዕጣው ከ${startWeek}ኛው ሳምንት ጀምሮ ነው።`);
-  }
-
-  if (week > totalWeeks) {
-    return alert(`የ${totalWeeks} ሳምንት የእቁብ ዙር ተጠናቋል።`);
-  }
-
-  const draws = publicData.draws || {};
-
-  if (draws[week]) {
-    return alert("ለዚህ ሳምንት ዕጣ አስቀድሞ ወጥቷል።");
-  }
-
-  const paidMembers = members.filter(m=>
-    privateData.payments?.[week]?.[m.id]
-  );
-
-  if (!paidMembers.length) {
-    return alert("ለዚህ ሳምንት ክፍያ የከፈሉ አባላት አልተመዘገቡም።");
-  }
-
-  const winner = paidMembers[
-    Math.floor(Math.random()*paidMembers.length)
-  ];
-
-  const draw = {
-    winnerId:winner.id,
-    winnerName:winner.name,
-    amount:payout,
-    date:new Date().toISOString()
-  };
-
-  try {
-    await set(ref(db,`public/draws/${week}`),draw);
-    await set(ref(db,`private/accounting/payouts/${week}`),draw);
-
-    await update(ref(db,"public/settings"),{
-      currentWeek:Math.min(week+1,totalWeeks+1)
-    });
-
-    $("drawMessage").classList.remove("hidden");
-
-    message(
-      "drawMessage",
-      `🎉 አሸናፊ፦ ${winner.name} — ${money(payout)}`,
-      "notice success"
+    await set(
+        ref(db,"public/draws"),
+        lottery
     );
+}
 
-    await refreshData();
-  } catch(error) {
-    console.error(error);
-    alert("ዕጣውን መመዝገብ አልተቻለም። Firebase Rules ተመልከት።");
-  }
+
+/* =========================
+   RENDER ALL
+========================= */
+
+function renderAll(){
+
+    renderMembers();
+    renderNotices();
+    renderHistory();
+    renderAdminMembers();
+    renderAdminNotices();
+    renderAdminLottery();
+    loadSettings();
+
+    document.getElementById(
+        "startWeekView"
+    ).textContent =
+        settings.startWeek;
+}
+
+
+/* =========================
+   MEMBERS
+========================= */
+
+function renderMembers(){
+
+    const list =
+        document.getElementById("memberList");
+
+    if(!members.length){
+
+        list.innerHTML =
+            '<div class="empty">አባል የለም።</div>';
+
+    }else{
+
+        list.innerHTML =
+            members.map(function(name,index){
+
+                return `
+                    <div class="member">
+
+                        <span class="memberNumber">
+                            ${index + 1}.
+                        </span>
+
+                        <span class="memberName">
+                            ${safe(name)}
+                        </span>
+
+                        <small>
+                            ${money(settings.contribution)}
+                            ብር / ሳምንት
+                        </small>
+
+                    </div>
+                `;
+
+            }).join("");
+    }
+
+    document.getElementById(
+        "memberCount"
+    ).textContent =
+        members.length;
+
+    document.getElementById(
+        "contributionView"
+    ).textContent =
+        money(settings.contribution) +
+        " ብር";
+
+    document.getElementById(
+        "totalView"
+    ).textContent =
+        money(
+            members.length *
+            settings.contribution
+        ) + " ብር";
+
+    document.getElementById(
+        "prizeView"
+    ).textContent =
+        money(settings.prize) +
+        " ብር";
+}
+
+
+/* =========================
+   ADD MEMBER
+========================= */
+
+window.addMember = async function(){
+
+    if(!isAdmin()){
+
+        alert("Admin ብቻ ይህን ማድረግ ይችላል።");
+        return;
+    }
+
+    const input =
+        document.getElementById("newMember");
+
+    const name =
+        input.value.trim();
+
+    if(!name){
+
+        alert("የአባል ስም ያስገቡ።");
+        return;
+    }
+
+    if(members.includes(name)){
+
+        alert("ይህ ስም ቀድሞውኑ አለ።");
+        return;
+    }
+
+    members.push(name);
+
+    if(!Array.isArray(lottery.available)){
+        lottery.available = [];
+    }
+
+    lottery.available.push(name);
+
+    try{
+
+        await set(
+            ref(db,"public/members"),
+            members
+        );
+
+        await saveLottery();
+
+        input.value = "";
+
+        renderAll();
+
+        showToast(
+            "✅ " + name + " ተጨመረ።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ አባሉን ማስቀመጥ አልተቻለም።"
+        );
+    }
 };
 
-$("weekSelect").addEventListener("change",()=>{
-  renderMembers();
-});
+
+/* =========================
+   ADMIN MEMBERS
+========================= */
+
+function renderAdminMembers(){
+
+    const box =
+        document.getElementById("adminMembers");
+
+    if(!box || !isAdmin()){
+        return;
+    }
+
+    if(!members.length){
+
+        box.innerHTML =
+            '<div class="empty">አባል የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        members.map(function(name,index){
+
+            return `
+                <div class="adminMember">
+
+                    <b style="color:#e8c65a">
+                        ${index + 1}
+                    </b>
+
+                    <input
+                        type="text"
+                        value="${safe(name)}"
+                        onchange="renameMember(${index},this.value)"
+                    >
+
+                    <button
+                        class="btn danger"
+                        type="button"
+                        onclick="deleteMember(${index})">
+                        ሰርዝ
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================
+   RENAME MEMBER
+========================= */
+
+window.renameMember = async function(index,newName){
+
+    if(!isAdmin()) return;
+
+    newName =
+        String(newName).trim();
+
+    if(!newName){
+
+        alert("ስም ባዶ ሊሆን አይችልም።");
+
+        renderAdminMembers();
+        return;
+    }
+
+    const oldName =
+        members[index];
+
+    members[index] =
+        newName;
+
+    if(Array.isArray(lottery.available)){
+
+        lottery.available =
+            lottery.available.map(function(name){
+
+                return name === oldName
+                    ? newName
+                    : name;
+
+            });
+    }
+
+    try{
+
+        await set(
+            ref(db,"public/members"),
+            members
+        );
+
+        await saveLottery();
+
+        renderAll();
+
+        showToast(
+            "✏️ የአባል ስም ተቀይሯል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ ለውጡን ማስቀመጥ አልተቻለም።"
+        );
+    }
+};
+
+
+/* =========================
+   DELETE MEMBER
+========================= */
+
+window.deleteMember = async function(index){
+
+    if(!isAdmin()) return;
+
+    if(members.length <= 1){
+
+        alert(
+            "ቢያንስ አንድ አባል መኖር አለበት።"
+        );
+
+        return;
+    }
+
+    const name =
+        members[index];
+
+    if(!confirm(
+        name +
+        "ን ማስወገድ ይፈልጋሉ?"
+    )){
+        return;
+    }
+
+    members.splice(index,1);
+
+    if(Array.isArray(lottery.available)){
+
+        lottery.available =
+            lottery.available.filter(
+                function(item){
+                    return item !== name;
+                }
+            );
+    }
+
+    try{
+
+        await set(
+            ref(db,"public/members"),
+            members
+        );
+
+        await saveLottery();
+
+        renderAll();
+
+        showToast(
+            "🗑️ አባሉ ተሰርዟል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ አባሉን መሰረዝ አልተቻለም።"
+        );
+    }
+};
+
+
+/* =========================
+   LOTTERY
+========================= */
+
+window.drawLottery = async function(){
+
+    if(!isAdmin()){
+
+        alert(
+            "🔐 እጣ ለማውጣት Admin መግባት አለበት።"
+        );
+
+        return;
+    }
+
+    if(spinning){
+        return;
+    }
+
+    if(
+        lottery.currentWeek <
+        settings.startWeek
+    ){
+
+        alert(
+            "እጣው ከሳምንት " +
+            settings.startWeek +
+            " ይጀምራል።"
+        );
+
+        return;
+    }
+
+    if(
+        lottery.currentWeek >
+        settings.cycle
+    ){
+
+        alert(
+            "የእቁብ ዑደቱ ተጠናቋል።"
+        );
+
+        return;
+    }
+
+    if(
+        !Array.isArray(lottery.available)
+    ){
+
+        lottery.available =
+            [...members];
+    }
+
+    if(
+        lottery.available.length === 0
+    ){
+
+        alert(
+            "የሚቀር አባል የለም።"
+        );
+
+        return;
+    }
+
+    spinning = true;
+
+    const button =
+        document.getElementById("drawButton");
+
+    button.disabled = true;
+    button.textContent =
+        "⏳ እየወጣ ነው...";
+
+    const winnerIndex =
+        Math.floor(
+            Math.random() *
+            lottery.available.length
+        );
+
+    const winner =
+        lottery.available[winnerIndex];
+
+    const wheel =
+        document.getElementById("wheel");
+
+    const rotations =
+        5 +
+        Math.floor(
+            Math.random() * 4
+        );
+
+    wheel.style.transform =
+        "rotate(" +
+        (
+            rotations * 360 +
+            winnerIndex * 35
+        ) +
+        "deg)";
+
+    setTimeout(async function(){
+
+        const item = {
+
+            week:
+                lottery.currentWeek,
+
+            name:
+                winner,
+
+            prize:
+                settings.prize,
+
+            date:
+                new Date().toLocaleDateString(
+                    "en-GB"
+                )
+
+        };
+
+        lottery.winners.push(item);
+
+        lottery.available.splice(
+            winnerIndex,
+            1
+        );
+
+        document.getElementById(
+            "winnerName"
+        ).textContent =
+            winner;
+
+        document.getElementById(
+            "winnerWeek"
+        ).textContent =
+            lottery.currentWeek;
+
+        document.getElementById(
+            "winnerPrize"
+        ).textContent =
+            money(settings.prize);
+
+        document.getElementById(
+            "result"
+        ).style.display =
+            "block";
+
+        document.getElementById(
+            "wheelText"
+        ).textContent =
+            winner;
+
+        lottery.currentWeek++;
+
+        try{
+
+            await saveLottery();
+
+            renderHistory();
+            renderAdminLottery();
+
+            showToast(
+                "🎉 አሸናፊው " +
+                winner +
+                " ነው።"
+            );
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "❌ የእጣ ውጤቱን Firebase ላይ ማስቀመጥ አልተቻለም።"
+            );
+        }
+
+        spinning = false;
+
+        button.disabled = false;
+        button.textContent =
+            "🎲 እጣ አውጣ";
+
+    },4000);
+};
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function renderHistory(){
+
+    const box =
+        document.getElementById("history");
+
+    if(!box){
+        return;
+    }
+
+    if(
+        !Array.isArray(lottery.winners) ||
+        lottery.winners.length === 0
+    ){
+
+        box.innerHTML =
+            '<div class="empty">እስካሁን የእጣ ታሪክ የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        [...lottery.winners]
+        .reverse()
+        .map(function(item){
+
+            return `
+                <div class="historyRow">
+
+                    <span>
+                        ሳምንት ${safe(item.week)}
+                    </span>
+
+                    <span>
+                        🎉 ${safe(item.name)}
+                    </span>
+
+                    <span>
+                        ${money(item.prize)} ብር
+                    </span>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+function loadSettings(){
+
+    const contribution =
+        document.getElementById(
+            "setContribution"
+        );
+
+    const prize =
+        document.getElementById(
+            "setPrize"
+        );
+
+    const start =
+        document.getElementById(
+            "setStart"
+        );
+
+    const cycle =
+        document.getElementById(
+            "setCycle"
+        );
+
+    if(contribution)
+        contribution.value =
+            settings.contribution;
+
+    if(prize)
+        prize.value =
+            settings.prize;
+
+    if(start)
+        start.value =
+            settings.startWeek;
+
+    if(cycle)
+        cycle.value =
+            settings.cycle;
+}
+
+
+window.saveSettings = async function(){
+
+    if(!isAdmin()) return;
+
+    const contribution =
+        Number(
+            document.getElementById(
+                "setContribution"
+            ).value
+        );
+
+    const prize =
+        Number(
+            document.getElementById(
+                "setPrize"
+            ).value
+        );
+
+    const start =
+        Number(
+            document.getElementById(
+                "setStart"
+            ).value
+        );
+
+    const cycle =
+        Number(
+            document.getElementById(
+                "setCycle"
+            ).value
+        );
+
+    if(
+        contribution <= 0 ||
+        prize <= 0 ||
+        start <= 0 ||
+        cycle <= 0
+    ){
+
+        alert(
+            "እባክዎ ትክክለኛ ቁጥር ያስገቡ።"
+        );
+
+        return;
+    }
+
+    settings = {
+
+        contribution,
+        prize,
+        startWeek:start,
+        cycle
+
+    };
+
+    try{
+
+        await set(
+            ref(db,"public/settings"),
+            settings
+        );
+
+        renderAll();
+
+        showToast(
+            "✅ ቅንብሩ ተቀምጧል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ ቅንብሩን ማስቀመጥ አልተቻለም።"
+        );
+    }
+};
+
+
+/* =========================
+   NOTICES
+========================= */
+
+function renderNotices(){
+
+    const box =
+        document.getElementById("noticeList");
+
+    if(!box){
+        return;
+    }
+
+    if(!notices.length){
+
+        box.innerHTML =
+            '<div class="empty">ማሳወቂያ የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        notices.map(function(item){
+
+            return `
+                <div class="notice">
+
+                    <b>
+                        ${safe(item.title)}
+                    </b>
+
+                    <small>
+                        ${safe(item.text)}
+                    </small>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+function renderAdminNotices(){
+
+    const box =
+        document.getElementById(
+            "adminNotices"
+        );
+
+    if(!box || !isAdmin()){
+        return;
+    }
+
+    if(!notices.length){
+
+        box.innerHTML =
+            '<div class="empty">ማሳወቂያ የለም።</div>';
+
+        return;
+    }
+
+    box.innerHTML =
+        notices.map(function(item,index){
+
+            return `
+                <div class="notice">
+
+                    <b>
+                        ${safe(item.title)}
+                    </b>
+
+                    <small>
+                        ${safe(item.text)}
+                    </small>
+
+                    <button
+                        class="btn danger"
+                        type="button"
+                        onclick="deleteNotice(${index})">
+                        ሰርዝ
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+window.addNotice = async function(){
+
+    if(!isAdmin()) return;
+
+    const title =
+        document.getElementById(
+            "noticeTitle"
+        ).value.trim();
+
+    const text =
+        document.getElementById(
+            "noticeMessage"
+        ).value.trim();
+
+    if(!title || !text){
+
+        alert(
+            "ርዕስ እና መልዕክት ያስገቡ።"
+        );
+
+        return;
+    }
+
+    notices.push({
+        title,
+        text
+    });
+
+    try{
+
+        await set(
+            ref(db,"public/notices"),
+            notices
+        );
+
+        document.getElementById(
+            "noticeTitle"
+        ).value = "";
+
+        document.getElementById(
+            "noticeMessage"
+        ).value = "";
+
+        renderAll();
+
+        showToast(
+            "📢 ማሳወቂያው ተጨመረ።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ ማሳወቂያውን ማስቀመጥ አልተቻለም።"
+        );
+    }
+};
+
+
+window.deleteNotice = async function(index){
+
+    if(!isAdmin()) return;
+
+    if(!confirm(
+        "ይህን ማሳወቂያ ማስወገድ ይፈልጋሉ?"
+    )){
+        return;
+    }
+
+    notices.splice(index,1);
+
+    try{
+
+        await set(
+            ref(db,"public/notices"),
+            notices
+        );
+
+        renderAll();
+
+        showToast(
+            "🗑️ ማሳወቂያው ተሰርዟል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ ማሳወቂያውን መሰረዝ አልተቻለም።"
+        );
+    }
+};
+
+
+/* =========================
+   ADMIN LOTTERY
+========================= */
+
+function renderAdminLottery(){
+
+    const current =
+        document.getElementById(
+            "currentWeekAdmin"
+        );
+
+    const available =
+        document.getElementById(
+            "availableAdmin"
+        );
+
+    if(current){
+
+        current.textContent =
+            lottery.currentWeek;
+    }
+
+    if(available){
+
+        available.textContent =
+            Array.isArray(
+                lottery.available
+            )
+            ? lottery.available.length
+            : 0;
+    }
+}
+
+
+/* =========================
+   RESET LOTTERY
+========================= */
+
+window.resetLottery = async function(){
+
+    if(!isAdmin()) return;
+
+    if(!confirm(
+        "የእጣ ታሪክን እና የእጣ ሁኔታን ወደ አዲስ መጀመሪያ ማስመለስ ይፈልጋሉ?"
+    )){
+        return;
+    }
+
+    lottery = {
+
+        currentWeek:
+            settings.startWeek,
+
+        winners:[],
+
+        available:
+            [...members]
+
+    };
+
+    try{
+
+        await saveLottery();
+
+        document.getElementById(
+            "result"
+        ).style.display =
+            "none";
+
+        document.getElementById(
+            "wheelText"
+        ).textContent =
+            "እጣ ዝግጁ ነው";
+
+        document.getElementById(
+            "wheel"
+        ).style.transform =
+            "rotate(0deg)";
+
+        renderAll();
+
+        showToast(
+            "🔄 እጣው እንደ አዲስ ተጀምሯል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ እጣውን reset ማድረግ አልተቻለም።"
+        );
+    }
+};
+
+
+/* =========================
+   LOGIN
+========================= */
+
+window.login = async function(){
+
+    const email =
+        document.getElementById(
+            "email"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
+
+    if(!email || !password){
+
+        alert(
+            "Email እና Password ያስገቡ።"
+        );
+
+        return;
+    }
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Email ወይም Password ትክክል አይደለም።"
+        );
+    }
+};
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+window.logout = async function(){
+
+    try{
+
+        await signOut(auth);
+
+    }catch(error){
+
+        console.error(error);
+    }
+};
+
+
+/* =========================
+   USERNAME
+========================= */
+
+async function loadAdminProfile(){
+
+    if(!isAdmin()){
+        return;
+    }
+
+    try{
+
+        const snap =
+            await get(
+                ref(
+                    db,
+                    "private/adminProfile/username"
+                )
+            );
+
+        const user =
+            auth.currentUser;
+
+        const name =
+            snap.exists()
+                ? snap.val()
+                : (
+                    user?.displayName ||
+                    "Admin"
+                );
+
+        document.getElementById(
+            "adminNameView"
+        ).textContent =
+            name;
+
+        document.getElementById(
+            "adminEmailView"
+        ).textContent =
+            user?.email || "";
+
+        document.getElementById(
+            "newUsername"
+        ).value =
+            name;
+
+    }catch(error){
+
+        console.error(error);
+    }
+}
+
+
+window.changeUsername = async function(){
+
+    if(!isAdmin()) return;
+
+    const input =
+        document.getElementById(
+            "newUsername"
+        );
+
+    const name =
+        input.value.trim();
+
+    if(!name){
+
+        alert(
+            "Username ያስገቡ።"
+        );
+
+        return;
+    }
+
+    try{
+
+        const user =
+            auth.currentUser;
+
+        await updateProfile(
+            user,
+            {
+                displayName:name
+            }
+        );
+
+        await set(
+            ref(
+                db,
+                "private/adminProfile/username"
+            ),
+            name
+        );
+
+        document.getElementById(
+            "adminNameView"
+        ).textContent =
+            name;
+
+        showToast(
+            "✅ Username ተቀይሯል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Username መቀየር አልተቻለም።"
+        );
+    }
+};
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+window.changePassword = async function(){
+
+    if(!isAdmin()) return;
+
+    const currentPassword =
+        document.getElementById(
+            "currentPassword"
+        ).value;
+
+    const newPassword =
+        document.getElementById(
+            "newPassword"
+        ).value;
+
+    const confirmPassword =
+        document.getElementById(
+            "confirmPassword"
+        ).value;
+
+    if(
+        !currentPassword ||
+        !newPassword ||
+        !confirmPassword
+    ){
+
+        alert(
+            "ሁሉንም Password ሳጥኖች ይሙሉ።"
+        );
+
+        return;
+    }
+
+    if(newPassword.length < 6){
+
+        alert(
+            "አዲሱ Password ቢያንስ 6 ቁምፊዎች ይኑረው።"
+        );
+
+        return;
+    }
+
+    if(newPassword !== confirmPassword){
+
+        alert(
+            "አዲሱ Password አይመሳሰልም።"
+        );
+
+        return;
+    }
+
+    try{
+
+        const user =
+            auth.currentUser;
+
+        const credential =
+            EmailAuthProvider.credential(
+                user.email,
+                currentPassword
+            );
+
+        await reauthenticateWithCredential(
+            user,
+            credential
+        );
+
+        await updatePassword(
+            user,
+            newPassword
+        );
+
+        document.getElementById(
+            "currentPassword"
+        ).value = "";
+
+        document.getElementById(
+            "newPassword"
+        ).value = "";
+
+        document.getElementById(
+            "confirmPassword"
+        ).value = "";
+
+        showToast(
+            "✅ Password በትክክል ተቀይሯል።"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        if(
+            error.code ===
+            "auth/wrong-password"
+        ){
+
+            alert(
+                "❌ የአሁኑ Password ትክክል አይደለም።"
+            );
+
+        }else{
+
+            alert(
+                "❌ Password መቀየር አልተቻለም።"
+            );
+        }
+    }
+};
+
+
+/* =========================
+   TABS
+========================= */
+
+window.openTab = function(tabId,button){
+
+    document.querySelectorAll(
+        ".tabContent"
+    ).forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+    document.querySelectorAll(
+        ".tab"
+    ).forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+    const selected =
+        document.getElementById(tabId);
+
+    if(selected){
+
+        selected.classList.add("active");
+    }
+
+    if(button){
+
+        button.classList.add("active");
+    }
+};
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async function(user){
+
+        const loginSection =
+            document.getElementById(
+                "loginSection"
+            );
+
+        const adminPanel =
+            document.getElementById(
+                "adminPanel"
+            );
+
+        if(!user){
+
+            loginSection.style.display =
+                "block";
+
+            adminPanel.style.display =
+                "none";
+
+            return;
+        }
+
+        if(user.uid !== ADMIN_UID){
+
+            await signOut(auth);
+
+            alert(
+                "❌ ይህ account Admin አይደለም።"
+            );
+
+            return;
+        }
+
+        loginSection.style.display =
+            "none";
+
+        adminPanel.style.display =
+            "block";
+
+        await ensureInitialData();
+        await loadData();
+        await loadAdminProfile();
+
+    }
+);
+
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
+
+        try{
+
+            await loadData();
+
+        }catch(error){
+
+            console.error(error);
+        }
+
+    }
+);
+
 </script>
 
 </body>
